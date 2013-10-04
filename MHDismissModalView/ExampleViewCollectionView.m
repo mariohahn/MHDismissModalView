@@ -25,7 +25,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Modal" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMH)];
 }
 -(void)modalPresentationMH{
-    
     ModalViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
     modal.screenShotImage = [self.navigationController.view screenshotMH];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:modal];
@@ -39,7 +38,12 @@
     NSString *cellIdentifier = nil;
     cellIdentifier = @"IVCollectionViewCell";
     IVCollectionViewCell *cell = (IVCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.iv.image = [UIImage imageNamed:@"itunesradio_mystations_2x"];
+    if (indexPath.row %2  == 0) {
+        cell.iv.image = [UIImage imageNamed:@"multitasking_screen_2x"];
+    }else{
+        cell.iv.image = [UIImage imageNamed:@"itunesradio_mystations_2x"];
+
+    }
     return cell;
 }
 

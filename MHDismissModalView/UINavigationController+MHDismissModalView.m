@@ -77,7 +77,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
     return [objc_getAssociatedObject(self, &LAST_POINT) floatValue];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y<=64) {
+    if (scrollView.contentOffset.y<=-64) {
         [scrollView setContentOffset:CGPointMake(0,  -64)];
     }
 }
@@ -86,6 +86,8 @@ NSString * const LAST_POINT = @"LAST_POINT";
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
   
+    [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
+
     options.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     options.scrollView.backgroundColor = [UIColor clearColor];
     
