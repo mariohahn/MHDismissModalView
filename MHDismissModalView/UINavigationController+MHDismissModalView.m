@@ -140,10 +140,8 @@ NSString * const LAST_POINT = @"LAST_POINT";
 }
 
 -(void)scrollRecognizerNavbar:(MHGestureRecognizerWithOptions *)recognizer{
-   
     [self setImageToWindow:recognizer];
-    [self changeFrameWithRecognizer:recognizer];
-    
+    [self changeFrameWithRecognizer:recognizer];    
 }
 - (void)scrollRecognizerView:(MHGestureRecognizerWithOptions *)recognizer{
 
@@ -186,7 +184,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
                 options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
                 self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             }else{
-                options.bluredBackground.frame = CGRectMake(0, self.view.frame.size.height, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                options.bluredBackground.frame = CGRectMake(0, -self.view.frame.size.height, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
                 self.view.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
             }
         } completion:^(BOOL finished) {

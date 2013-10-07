@@ -48,8 +48,10 @@
     NSString *cellIdentifier = nil;
     cellIdentifier = @"IVCollectionViewCell";
     IVCollectionViewCell *cell = (IVCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    if (indexPath.row %2  == 0) {
+    if (indexPath.row %3  == 0) {
         cell.iv.image = [UIImage imageNamed:@"multitasking_screen_2x"];
+    }else if(indexPath.row % 2  ==0){
+        cell.iv.image = [UIImage imageNamed:@"photos_moments_screen_2x"];
     }else{
         cell.iv.image = [UIImage imageNamed:@"itunesradio_mystations_2x"];
     }

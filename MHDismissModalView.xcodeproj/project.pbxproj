@@ -27,6 +27,7 @@
 		F546C5E217FEF67600CC2E06 /* multitasking_screen_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F546C5E117FEF67600CC2E06 /* multitasking_screen_2x.png */; };
 		F546C5E81802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5E61802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m */; };
 		F546C5EB1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5EA1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m */; };
+		F546C5ED1802FA0800CC2E06 /* photos_moments_screen_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		F546C5E71802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+MHDismissModalView.h"; sourceTree = "<group>"; };
 		F546C5E91802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewControllerWithoutScrollView.h; sourceTree = "<group>"; };
 		F546C5EA1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalViewControllerWithoutScrollView.m; sourceTree = "<group>"; };
+		F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photos_moments_screen_2x.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				F546C5D617FEE39100CC2E06 /* ExampleViewCollectionView.m */,
 				F546C5E017FEF55400CC2E06 /* WHAT I NEED TO IMPORT */,
 				F546C5DE17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png */,
+				F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */,
 				F546C5E117FEF67600CC2E06 /* multitasking_screen_2x.png */,
 				F546C55E17FEBEAF00CC2E06 /* Images.xcassets */,
 				F546C54D17FEBEAF00CC2E06 /* Supporting Files */,
@@ -262,6 +265,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F546C5ED1802FA0800CC2E06 /* photos_moments_screen_2x.png in Resources */,
 				F546C55F17FEBEAF00CC2E06 /* Images.xcassets in Resources */,
 				F546C55117FEBEAF00CC2E06 /* InfoPlist.strings in Resources */,
 				F546C5DF17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png in Resources */,
