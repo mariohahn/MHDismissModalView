@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSUInteger, MHModalTheme) {
     MHModalThemeBlack,
-    MHModalThemeWhite
+    MHModalThemeWhite,
+    MHModalThemeNoBlur,
 };
 
 @interface UIView (MHScreenShot)

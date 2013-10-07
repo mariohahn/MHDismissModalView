@@ -85,9 +85,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
     
-    [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
-    options.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-    options.scrollView.backgroundColor = [UIColor clearColor];
+
     UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
     UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     if (options.theme == MHModalThemeBlack) {
@@ -96,11 +94,16 @@ NSString * const LAST_POINT = @"LAST_POINT";
         backGroundView.image = [image applyLightEffect];
     }
     backGroundView.tag =203;
+    if (options.theme != MHModalThemeNoBlur) {
+        [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
+        options.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+        options.scrollView.backgroundColor = [UIColor clearColor];
     if (!options.scrollView) {
         [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
         [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
     }else{
         [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+    }
     }
     
     options.screenShot = image;
