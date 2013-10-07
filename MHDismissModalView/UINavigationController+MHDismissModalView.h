@@ -25,7 +25,6 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 @property (nonatomic) MHModalTheme theme;
 
 - (id)initWithScrollView:(UIScrollView*)scrollView
-              screenShot:(UIImage*)screenShot
                    theme:(MHModalTheme)theme;
 @end
 

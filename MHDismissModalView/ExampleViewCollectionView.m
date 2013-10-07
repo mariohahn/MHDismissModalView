@@ -9,6 +9,7 @@
 #import "ExampleViewCollectionView.h"
 #import "ModalViewController.h"
 #import "UIImage+ImageEffects.h"
+#import "UINavigationController+MHDismissModalView.h"
 
 @implementation IVCollectionViewCell
 
@@ -26,10 +27,10 @@
 }
 -(void)modalPresentationMH{
     ModalViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
-    modal.screenShotImage = [self.navigationController.view screenshotMH];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:modal];
     [self presentViewController:nav animated:YES completion:nil];
 }
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return 10;
 }
@@ -42,8 +43,8 @@
         cell.iv.image = [UIImage imageNamed:@"multitasking_screen_2x"];
     }else{
         cell.iv.image = [UIImage imageNamed:@"itunesradio_mystations_2x"];
-
     }
+    
     return cell;
 }
 

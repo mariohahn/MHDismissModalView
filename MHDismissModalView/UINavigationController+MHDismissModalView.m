@@ -22,7 +22,6 @@ NSString * const LAST_POINT = @"LAST_POINT";
     } else {
         [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     }
-    
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
@@ -34,14 +33,13 @@ NSString * const LAST_POINT = @"LAST_POINT";
 @implementation MHDismissModalViewOptions
 
 - (id)initWithScrollView:(UIScrollView*)scrollView
-              screenShot:(UIImage*)screenShot
                    theme:(MHModalTheme)theme
 {
     self = [super init];
     if (!self)
         return nil;
     self.scrollView = scrollView;
-    self.screenShot = screenShot;
+    self.screenShot = nil;
     self.theme = theme;
     return self;
 }
@@ -85,21 +83,20 @@ NSString * const LAST_POINT = @"LAST_POINT";
 
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
-  
+    
     [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
-
     options.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     options.scrollView.backgroundColor = [UIColor clearColor];
-    
-    UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, options.screenShot.size.width, options.screenShot.size.height)];
+    UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
+    UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     if (options.theme == MHModalThemeBlack) {
-        backGroundView.image = [options.screenShot applyDarkEffect];
+        backGroundView.image = [image applyDarkEffect];
     }else{
-        backGroundView.image = [options.screenShot applyLightEffect];
+        backGroundView.image = [image applyLightEffect];
     }
     backGroundView.tag =203;
     [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
-    
+    options.screenShot = image;
     options.bluredBackground = backGroundView;
     
     MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizer:)];
@@ -109,12 +106,10 @@ NSString * const LAST_POINT = @"LAST_POINT";
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
     [self.view addGestureRecognizer:panRecognizer];
-    
-    
 }
 
 - (void)scrollRecognizer:(MHGestureRecognizerWithOptions *)recognizer{
-    
+
     bool foundBackground =NO;
     for (id view in [[UIApplication sharedApplication] keyWindow].subviews) {
         if ([view isKindOfClass:[UIImageView class]] && [view tag]==203) {
