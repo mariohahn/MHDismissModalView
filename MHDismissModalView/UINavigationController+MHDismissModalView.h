@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 
 @interface MHGestureRecognizerWithOptions : UIPanGestureRecognizer
 @property (strong, nonatomic) MHDismissModalViewOptions *options;
+@property (nonatomic) id objectCameFrom;
+
 @end
 
 @interface UINavigationController (MHDismissModalView)<UIGestureRecognizerDelegate,UIScrollViewDelegate>

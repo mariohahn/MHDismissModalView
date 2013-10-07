@@ -22,7 +22,6 @@
     
     [self.navigationController installMHDismissModalViewWithOptions:[[MHDismissModalViewOptions alloc] initWithScrollView:nil
                                                                                                                     theme:MHModalThemeWhite]];
-    
 }
 
 

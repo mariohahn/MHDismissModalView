@@ -50,6 +50,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
     self = [super init];
     if (!self)
         return nil;
+    self.objectCameFrom =nil;
     self.options = nil;
     return self;
 }
@@ -105,17 +106,24 @@ NSString * const LAST_POINT = @"LAST_POINT";
     options.screenShot = image;
     options.bluredBackground = backGroundView;
     
-    MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizer:)];
+    MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizerView:)];
     panRecognizer.options = options;
     options.scrollView.delegate =self;
     panRecognizer.delegate = self;
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
     [self.view addGestureRecognizer:panRecognizer];
+
+    if (options.scrollView) {
+        MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizerNavbar:)];
+        panRecognizer.options = options;
+        panRecognizer.maximumNumberOfTouches = 1;
+        panRecognizer.minimumNumberOfTouches = 1;
+        [self.navigationBar addGestureRecognizer:panRecognizer];
+    }
 }
 
-- (void)scrollRecognizer:(MHGestureRecognizerWithOptions *)recognizer{
-
+-(void)setImageToWindow:(MHGestureRecognizerWithOptions*)recognizer{
     bool foundBackground =NO;
     for (id view in [[UIApplication sharedApplication] keyWindow].subviews) {
         if ([view isKindOfClass:[UIImageView class]] && [view tag]==203) {
@@ -128,51 +136,73 @@ NSString * const LAST_POINT = @"LAST_POINT";
         view.tag =203;
         [[[UIApplication sharedApplication] keyWindow]insertSubview:view belowSubview:self.view];
     }
+
+}
+
+-(void)scrollRecognizerNavbar:(MHGestureRecognizerWithOptions *)recognizer{
+   
+    [self setImageToWindow:recognizer];
+    [self changeFrameWithRecognizer:recognizer];
+    
+}
+- (void)scrollRecognizerView:(MHGestureRecognizerWithOptions *)recognizer{
+
+    [self setImageToWindow:recognizer];
     
     MHDismissModalViewOptions *options = recognizer.options;
+
     if (options.scrollView.contentOffset.y==-64 || !options.scrollView) {
-        CGPoint translatedPoint = [(UIPanGestureRecognizer*)recognizer translationInView:self.view];
-        if (recognizer.state == UIGestureRecognizerStateBegan) {
-            self.wasUnderZero =NO;
-            self.lastPoint = [(UIPanGestureRecognizer*)recognizer translationInView:self.view].y;
-        }
-        if (recognizer.state == UIGestureRecognizerStateChanged) {
-            [options.scrollView setScrollEnabled:NO];
-            if (self.view.frame.origin.y>=0 || !self.wasUnderZero) {
-                options.bluredBackground.frame = CGRectMake(0, -(translatedPoint.y-self.lastPoint), options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
-                self.view.frame = CGRectMake(0, translatedPoint.y-self.lastPoint, self.view.frame.size.width, self.view.frame.size.height);
-                self.wasUnderZero =YES;
-                if (self.view.frame.origin.y <0) {
-                    options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
-                    
-                    self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-                }
+        
+        [self changeFrameWithRecognizer:recognizer];
+        
+    }
+}
+
+-(void)changeFrameWithRecognizer:(MHGestureRecognizerWithOptions*)recognizer{
+    MHDismissModalViewOptions *options = recognizer.options;
+    CGPoint translatedPoint = [(UIPanGestureRecognizer*)recognizer translationInView:self.view];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        self.wasUnderZero =NO;
+        self.lastPoint = [(UIPanGestureRecognizer*)recognizer translationInView:self.view].y;
+        
+    }
+    if (recognizer.state == UIGestureRecognizerStateChanged) {
+        [options.scrollView setScrollEnabled:NO];
+        if (self.view.frame.origin.y>=0 || !self.wasUnderZero) {
+            options.bluredBackground.frame = CGRectMake(0, -(translatedPoint.y-self.lastPoint), options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+            self.view.frame = CGRectMake(0, translatedPoint.y-self.lastPoint, self.view.frame.size.width, self.view.frame.size.height);
+            self.wasUnderZero =YES;
+            if (self.view.frame.origin.y <0) {
+                options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                
+                self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             }
         }
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
-            [options.scrollView setScrollEnabled:YES];
-            [UIView animateWithDuration:0.4 animations:^{
-                if (self.view.frame.origin.y <self.view.frame.size.height/3) {
-                    options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
-                    self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-                }else{
-                    options.bluredBackground.frame = CGRectMake(0, self.view.frame.size.height, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
-                    self.view.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
-                }
-            } completion:^(BOOL finished) {
-                if (self.view.frame.origin.y == self.view.frame.size.height) {
-                    [self dismissViewControllerAnimated:NO completion:^{
-                        for (id view in [[UIApplication sharedApplication] keyWindow].subviews) {
-                            if ([view isKindOfClass:[UIImageView class]] && [view tag]==203){
-                                [view removeFromSuperview];
-                            }
-                        }
-                    }];
-                }
-            }];
-            
-        }
     }
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [options.scrollView setScrollEnabled:YES];
+        [UIView animateWithDuration:0.4 animations:^{
+            if (self.view.frame.origin.y <self.view.frame.size.height/3) {
+                options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+            }else{
+                options.bluredBackground.frame = CGRectMake(0, self.view.frame.size.height, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                self.view.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+            }
+        } completion:^(BOOL finished) {
+            if (self.view.frame.origin.y == self.view.frame.size.height) {
+                [self dismissViewControllerAnimated:NO completion:^{
+                    for (id view in [[UIApplication sharedApplication] keyWindow].subviews) {
+                        if ([view isKindOfClass:[UIImageView class]] && [view tag]==203){
+                            [view removeFromSuperview];
+                        }
+                    }
+                }];
+            }
+        }];
+        
+    }
+
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
