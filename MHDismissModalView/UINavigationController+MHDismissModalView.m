@@ -95,7 +95,13 @@ NSString * const LAST_POINT = @"LAST_POINT";
         backGroundView.image = [image applyLightEffect];
     }
     backGroundView.tag =203;
-    [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+    if (!options.scrollView) {
+        [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
+        [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
+    }else{
+        [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+    }
+    
     options.screenShot = image;
     options.bluredBackground = backGroundView;
     
@@ -123,9 +129,8 @@ NSString * const LAST_POINT = @"LAST_POINT";
         [[[UIApplication sharedApplication] keyWindow]insertSubview:view belowSubview:self.view];
     }
     
-    
     MHDismissModalViewOptions *options = recognizer.options;
-    if (options.scrollView.contentOffset.y==-64) {
+    if (options.scrollView.contentOffset.y==-64 || !options.scrollView) {
         CGPoint translatedPoint = [(UIPanGestureRecognizer*)recognizer translationInView:self.view];
         if (recognizer.state == UIGestureRecognizerStateBegan) {
             self.wasUnderZero =NO;

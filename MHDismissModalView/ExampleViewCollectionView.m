@@ -8,6 +8,8 @@
 
 #import "ExampleViewCollectionView.h"
 #import "ModalViewController.h"
+#import "ModalViewControllerWithoutScrollView.h"
+
 #import "UIImage+ImageEffects.h"
 #import "UINavigationController+MHDismissModalView.h"
 
@@ -23,7 +25,14 @@
 
 -(void)viewDidLoad{
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Modal" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMH)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"View" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMHWithoutScrollView)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"ScrollView" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMH)];
+}
+-(void)modalPresentationMHWithoutScrollView{
+    ModalViewControllerWithoutScrollView *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewControllerWithoutScrollView"];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:modal];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 -(void)modalPresentationMH{
     ModalViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
