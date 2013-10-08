@@ -20,8 +20,8 @@
     [super viewDidLoad];
     self.title = @"Modal view without a scrollView";
     
-    [self.navigationController installMHDismissModalViewWithOptions:[[MHDismissModalViewOptions alloc] initWithScrollView:nil
-                                                                                                                    theme:MHModalThemeWhite]];
+//    [self.navigationController installMHDismissModalViewWithOptions:[[MHDismissModalViewOptions alloc] initWithScrollView:nil
+//                                                                                                                    theme:MHModalThemeWhite]];
 }
 
 

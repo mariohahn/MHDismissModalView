@@ -13,6 +13,53 @@
 NSString * const WAS_UNDER_ZERO = @"WAS_UNDER_ZERO";
 NSString * const LAST_POINT = @"LAST_POINT";
 
+
+@implementation MHDismissSharedManager
+
++ (MHDismissSharedManager *)sharedDismissManager
+{
+    static MHDismissSharedManager *sharedDismissManagerInstance = nil;
+    static dispatch_once_t onceQueue;
+    dispatch_once(&onceQueue, ^{
+        sharedDismissManagerInstance = [[self alloc] init];
+    });
+    return sharedDismissManagerInstance;
+}
+-(void)installDismissSharedManagerWithCustomColor:(UIColor *)blurColor{
+
+    MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:MHModalThemeCustomBlurColor];
+    options.customColor = blurColor;
+    [self addObserverToInstallMHDismissWithOptions:options];
+}
+
+-(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options{
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"UINavigationControllerDidShowViewControllerNotification" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        UIViewController *viewController =  [[note userInfo] objectForKey:@"UINavigationControllerNextVisibleViewController"];
+        id firstObject;
+        if ([viewController view].subviews.count >=1) {
+            firstObject =[[viewController view].subviews objectAtIndex:0];
+        }
+        MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
+                                                                                                theme:MHModalThemeWhite];
+        newOptions.theme = options.theme;
+        newOptions.customColor = options.customColor;
+        if ([firstObject isKindOfClass:[UIScrollView class]]) {
+            [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+        }else{
+            newOptions.scrollView = nil;
+            [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+        }
+    }];
+    
+}
+
+-(void)installDismissSharedManagerWithTheme:(MHModalTheme)theme{
+    MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:theme];
+    [self addObserverToInstallMHDismissWithOptions:options];
+}
+
+@end
+
 @implementation UIView (MHScreenShot)
 
 - (UIImage *)screenshotMH{
@@ -33,16 +80,17 @@ NSString * const LAST_POINT = @"LAST_POINT";
 @implementation MHDismissModalViewOptions
 
 - (id)initWithScrollView:(UIScrollView*)scrollView
-                   theme:(MHModalTheme)theme
-{
+                   theme:(MHModalTheme)theme{
     self = [super init];
     if (!self)
         return nil;
     self.scrollView = scrollView;
     self.screenShot = nil;
     self.theme = theme;
+    self.customColor =nil;
     return self;
 }
+
 @end
 
 @implementation MHGestureRecognizerWithOptions
@@ -85,27 +133,38 @@ NSString * const LAST_POINT = @"LAST_POINT";
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
     
-
     UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
     UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-    if (options.theme == MHModalThemeBlack) {
-        backGroundView.image = [image applyDarkEffect];
-    }else{
-        backGroundView.image = [image applyLightEffect];
+    
+    switch (options.theme) {
+        case MHModalThemeBlack:{
+            backGroundView.image = [image applyDarkEffect];
+        }
+            break;
+        case MHModalThemeWhite:{
+            backGroundView.image = [image applyLightEffect];
+        }
+            break;
+        case MHModalThemeCustomBlurColor:{
+            backGroundView.image = [image applyTintEffectWithColor:options.customColor];
+        }
+            break;
+            
+        default:
+            break;
     }
     backGroundView.tag =203;
     if (options.theme != MHModalThemeNoBlur) {
         [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
         options.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
         options.scrollView.backgroundColor = [UIColor clearColor];
-    if (!options.scrollView) {
-        [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
-        [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
-    }else{
-        [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+        if (!options.scrollView) {
+            [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
+            [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
+        }else{
+            [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+        }
     }
-    }
-    
     options.screenShot = image;
     options.bluredBackground = backGroundView;
     
@@ -116,7 +175,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
     [self.view addGestureRecognizer:panRecognizer];
-
+    
     if (options.scrollView) {
         MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizerNavbar:)];
         panRecognizer.options = options;
@@ -147,15 +206,10 @@ NSString * const LAST_POINT = @"LAST_POINT";
     [self changeFrameWithRecognizer:recognizer];    
 }
 - (void)scrollRecognizerView:(MHGestureRecognizerWithOptions *)recognizer{
-
     [self setImageToWindow:recognizer];
-    
     MHDismissModalViewOptions *options = recognizer.options;
-
     if (options.scrollView.contentOffset.y==-64 || !options.scrollView) {
-        
         [self changeFrameWithRecognizer:recognizer];
-        
     }
 }
 
@@ -201,9 +255,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
                 }];
             }
         }];
-        
     }
-
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{

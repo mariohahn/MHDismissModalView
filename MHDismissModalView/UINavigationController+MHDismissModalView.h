@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
     MHModalThemeBlack,
     MHModalThemeWhite,
     MHModalThemeNoBlur,
+    MHModalThemeCustomBlurColor
 };
 
 @interface UIView (MHScreenShot)
@@ -23,10 +24,12 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImage *screenShot;
 @property (nonatomic, strong) UIImageView *bluredBackground;
+@property (nonatomic, strong) UIColor *customColor;
 @property (nonatomic) MHModalTheme theme;
 
 - (id)initWithScrollView:(UIScrollView*)scrollView
                    theme:(MHModalTheme)theme;
+
 @end
 
 @interface MHGestureRecognizerWithOptions : UIPanGestureRecognizer
@@ -35,9 +38,20 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 
 @end
 
+@interface MHDismissSharedManager : NSObject
++ (MHDismissSharedManager *)sharedDismissManager;
+-(void)installDismissSharedManagerWithTheme:(MHModalTheme)theme;
+-(void)installDismissSharedManagerWithCustomColor:(UIColor*)blurColor;
+@end
+
+
+
+
 @interface UINavigationController (MHDismissModalView)<UIGestureRecognizerDelegate,UIScrollViewDelegate>
 @property (nonatomic) BOOL wasUnderZero;
 @property CGFloat lastPoint;
 
+//Call the method in the ViewDidLoad method
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options;
+
 @end

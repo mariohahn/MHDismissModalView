@@ -183,8 +183,8 @@
 			children = (
 				F546C5DB17FEE6B400CC2E06 /* UIImage+ImageEffects.h */,
 				F546C5DC17FEE6B400CC2E06 /* UIImage+ImageEffects.m */,
-				F546C5E61802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m */,
 				F546C5E71802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.h */,
+				F546C5E61802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m */,
 			);
 			name = "WHAT I NEED TO IMPORT";
 			sourceTree = "<group>";

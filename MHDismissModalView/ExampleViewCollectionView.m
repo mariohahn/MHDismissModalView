@@ -9,7 +9,6 @@
 #import "ExampleViewCollectionView.h"
 #import "ModalViewController.h"
 #import "ModalViewControllerWithoutScrollView.h"
-
 #import "UIImage+ImageEffects.h"
 #import "UINavigationController+MHDismissModalView.h"
 
@@ -22,8 +21,9 @@
 
 @implementation ExampleViewCollectionView
 
-
 -(void)viewDidLoad{
+    
+    
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"View" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMHWithoutScrollView)];
     
