@@ -11,10 +11,9 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
-    [[MHDismissSharedManager sharedDismissManager]installDismissSharedManagerWithTheme:MHModalThemeWhite];
+    [[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite];
     return YES;
 }
 							

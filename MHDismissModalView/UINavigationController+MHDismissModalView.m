@@ -25,7 +25,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
     });
     return sharedDismissManagerInstance;
 }
--(void)installDismissSharedManagerWithCustomColor:(UIColor *)blurColor{
+-(void)installWithCustomColor:(UIColor *)blurColor{
 
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:MHModalThemeCustomBlurColor];
     options.customColor = blurColor;
@@ -33,6 +33,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
 }
 
 -(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options{
+
     [[NSNotificationCenter defaultCenter]addObserverForName:@"UINavigationControllerDidShowViewControllerNotification" object:nil queue:nil usingBlock:^(NSNotification *note) {
         UIViewController *viewController =  [[note userInfo] objectForKey:@"UINavigationControllerNextVisibleViewController"];
         id firstObject;
@@ -53,7 +54,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
     
 }
 
--(void)installDismissSharedManagerWithTheme:(MHModalTheme)theme{
+-(void)installWithTheme:(MHModalTheme)theme{
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:theme];
     [self addObserverToInstallMHDismissWithOptions:options];
 }
@@ -124,8 +125,8 @@ NSString * const LAST_POINT = @"LAST_POINT";
     return [objc_getAssociatedObject(self, &LAST_POINT) floatValue];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y<=-64) {
-        [scrollView setContentOffset:CGPointMake(0,  -64)];
+    if (scrollView.contentOffset.y<=-(self.navigationBar.frame.size.height+20)) {
+       [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
     }
 }
 
@@ -155,8 +156,8 @@ NSString * const LAST_POINT = @"LAST_POINT";
     }
     backGroundView.tag =203;
     if (options.theme != MHModalThemeNoBlur) {
-        [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
-        options.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+        [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0)];
+        options.scrollView.contentInset = UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0);
         options.scrollView.backgroundColor = [UIColor clearColor];
         if (!options.scrollView) {
             [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
@@ -208,7 +209,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
 - (void)scrollRecognizerView:(MHGestureRecognizerWithOptions *)recognizer{
     [self setImageToWindow:recognizer];
     MHDismissModalViewOptions *options = recognizer.options;
-    if (options.scrollView.contentOffset.y==-64 || !options.scrollView) {
+    if (options.scrollView.contentOffset.y==-(self.navigationBar.frame.size.height+20) || !options.scrollView) {
         [self changeFrameWithRecognizer:recognizer];
     }
 }
@@ -224,6 +225,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         [options.scrollView setScrollEnabled:NO];
         if (self.view.frame.origin.y>=0 || !self.wasUnderZero) {
+            
             options.bluredBackground.frame = CGRectMake(0, -(translatedPoint.y-self.lastPoint), options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
             self.view.frame = CGRectMake(0, translatedPoint.y-self.lastPoint, self.view.frame.size.width, self.view.frame.size.height);
             self.wasUnderZero =YES;
