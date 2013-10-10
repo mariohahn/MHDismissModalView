@@ -36,6 +36,13 @@ NSString * const LAST_POINT = @"LAST_POINT";
 
     [[NSNotificationCenter defaultCenter]addObserverForName:@"UINavigationControllerDidShowViewControllerNotification" object:nil queue:nil usingBlock:^(NSNotification *note) {
         UIViewController *viewController =  [[note userInfo] objectForKey:@"UINavigationControllerNextVisibleViewController"];
+        id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+            rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
+        }
+        
+        
+        if (![rootViewController isEqual:viewController]) {
         id firstObject;
         if ([viewController view].subviews.count >=1) {
             firstObject =[[viewController view].subviews objectAtIndex:0];
@@ -49,6 +56,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
         }else{
             newOptions.scrollView = nil;
             [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+        }
         }
     }];
     
