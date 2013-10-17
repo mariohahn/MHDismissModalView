@@ -13,8 +13,28 @@
 NSString * const WAS_UNDER_ZERO = @"WAS_UNDER_ZERO";
 NSString * const LAST_POINT = @"LAST_POINT";
 NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
-NSString * const IS_DISSMISING = @"IS_DISSMISING";
 
+@interface MHDismissModalViewOptions()
+@property (nonatomic, strong) UIImage *screenShot;
+@property (nonatomic, strong) UIImageView *bluredBackground;
+@property (nonatomic, strong) UIColor *customColor;
+@end
+
+@implementation MHDismissModalViewOptions
+
+- (id)initWithScrollView:(UIScrollView*)scrollView
+                   theme:(MHModalTheme)theme{
+    self = [super init];
+    if (!self)
+        return nil;
+    self.scrollView = scrollView;
+    self.screenShot = nil;
+    self.theme = theme;
+    self.customColor =nil;
+    return self;
+}
+
+@end
 
 @implementation MHDismissSharedManager
 
@@ -86,21 +106,6 @@ NSString * const IS_DISSMISING = @"IS_DISSMISING";
 @end
 
 
-@implementation MHDismissModalViewOptions
-
-- (id)initWithScrollView:(UIScrollView*)scrollView
-                   theme:(MHModalTheme)theme{
-    self = [super init];
-    if (!self)
-        return nil;
-    self.scrollView = scrollView;
-    self.screenShot = nil;
-    self.theme = theme;
-    self.customColor =nil;
-    return self;
-}
-
-@end
 
 @implementation MHGestureRecognizerWithOptions
 -(id)init{
