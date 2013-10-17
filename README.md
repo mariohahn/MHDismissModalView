@@ -18,7 +18,7 @@ Install MHDismissModalView without a ScrollView
 
 Global Call for all Modal Views (AppDelegate)
 
-[[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite];
+	[[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite];
 
 
 
