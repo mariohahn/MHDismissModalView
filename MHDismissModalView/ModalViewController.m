@@ -21,8 +21,6 @@
     
     self.title = @"Modal view with a scrollView";
     
-    
-    
 //    [self.navigationController installMHDismissModalViewWithOptions:[[MHDismissModalViewOptions alloc] initWithScrollView:self.tableView
 //                                                                                                                    theme:MHModalThemeWhite]];
 }

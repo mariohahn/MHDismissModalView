@@ -22,9 +22,6 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 
 @interface MHDismissModalViewOptions : NSObject
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIImage *screenShot;
-@property (nonatomic, strong) UIImageView *bluredBackground;
-@property (nonatomic, strong) UIColor *customColor;
 @property (nonatomic) MHModalTheme theme;
 
 - (id)initWithScrollView:(UIScrollView*)scrollView
@@ -39,6 +36,7 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 @end
 
 @interface MHDismissSharedManager : NSObject
+//Call the method in the didFinishLaunchingWithOptions method (Appdelegate)
 + (MHDismissSharedManager *)sharedDismissManager;
 -(void)installWithTheme:(MHModalTheme)theme;
 -(void)installWithCustomColor:(UIColor*)blurColor;

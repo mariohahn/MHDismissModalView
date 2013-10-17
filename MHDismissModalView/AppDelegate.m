@@ -13,6 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
+    //Global Call to install MHDismiss
     [[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite];
     return YES;
 }
