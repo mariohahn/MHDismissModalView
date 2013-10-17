@@ -12,28 +12,8 @@
 
 NSString * const WAS_UNDER_ZERO = @"WAS_UNDER_ZERO";
 NSString * const LAST_POINT = @"LAST_POINT";
+NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
-@interface MHDismissModalViewOptions()
-@property (nonatomic, strong) UIImage *screenShot;
-@property (nonatomic, strong) UIImageView *bluredBackground;
-@property (nonatomic, strong) UIColor *customColor;
-@end
-
-@implementation MHDismissModalViewOptions
-
-- (id)initWithScrollView:(UIScrollView*)scrollView
-                   theme:(MHModalTheme)theme{
-    self = [super init];
-    if (!self)
-        return nil;
-    self.scrollView = scrollView;
-    self.screenShot = nil;
-    self.theme = theme;
-    self.customColor =nil;
-    return self;
-}
-
-@end
 
 @implementation MHDismissSharedManager
 
@@ -47,14 +27,13 @@ NSString * const LAST_POINT = @"LAST_POINT";
     return sharedDismissManagerInstance;
 }
 -(void)installWithCustomColor:(UIColor *)blurColor{
-
+    
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:MHModalThemeCustomBlurColor];
     options.customColor = blurColor;
     [self addObserverToInstallMHDismissWithOptions:options];
 }
 
 -(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options{
-
     [[NSNotificationCenter defaultCenter]addObserverForName:@"UINavigationControllerDidShowViewControllerNotification" object:nil queue:nil usingBlock:^(NSNotification *note) {
         UIViewController *viewController =  [[note userInfo] objectForKey:@"UINavigationControllerNextVisibleViewController"];
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
@@ -62,22 +41,21 @@ NSString * const LAST_POINT = @"LAST_POINT";
             rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
         }
         
-        
         if (![rootViewController isEqual:viewController]) {
-        id firstObject;
-        if ([viewController view].subviews.count >=1) {
-            firstObject =[[viewController view].subviews objectAtIndex:0];
-        }
-        MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
-                                                                                                theme:MHModalThemeWhite];
-        newOptions.theme = options.theme;
-        newOptions.customColor = options.customColor;
-        if ([firstObject isKindOfClass:[UIScrollView class]]) {
-            [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
-        }else{
-            newOptions.scrollView = nil;
-            [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
-        }
+            id firstObject;
+            if ([viewController view].subviews.count >=1) {
+                firstObject =[[viewController view].subviews objectAtIndex:0];
+            }
+            MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
+                                                                                                    theme:MHModalThemeWhite];
+            newOptions.theme = options.theme;
+            newOptions.customColor = options.customColor;
+            if ([firstObject isKindOfClass:[UIScrollView class]]) {
+                [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+            }else{
+                newOptions.scrollView = nil;
+                [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+            }
         }
     }];
     
@@ -107,6 +85,21 @@ NSString * const LAST_POINT = @"LAST_POINT";
 @end
 
 
+@implementation MHDismissModalViewOptions
+
+- (id)initWithScrollView:(UIScrollView*)scrollView
+                   theme:(MHModalTheme)theme{
+    self = [super init];
+    if (!self)
+        return nil;
+    self.scrollView = scrollView;
+    self.screenShot = nil;
+    self.theme = theme;
+    self.customColor =nil;
+    return self;
+}
+
+@end
 
 @implementation MHGestureRecognizerWithOptions
 -(id)init{
@@ -124,6 +117,14 @@ NSString * const LAST_POINT = @"LAST_POINT";
 
 @dynamic wasUnderZero;
 @dynamic lastPoint;
+@dynamic hasScrollView;
+
+-(void)setHasScrollView:(BOOL)hasScrollView{
+    objc_setAssociatedObject(self, &HAS_SCROLLVIEW, @(hasScrollView), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(BOOL)hasScrollView{
+    return [objc_getAssociatedObject(self, &HAS_SCROLLVIEW) boolValue];
+}
 
 -(void)setWasUnderZero:(BOOL)wasUnderZero{
     objc_setAssociatedObject(self, &WAS_UNDER_ZERO, @(wasUnderZero), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -140,7 +141,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView.contentOffset.y<=-(self.navigationBar.frame.size.height+20)) {
-       [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
+        [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
     }
 }
 
@@ -192,11 +193,14 @@ NSString * const LAST_POINT = @"LAST_POINT";
     [self.view addGestureRecognizer:panRecognizer];
     
     if (options.scrollView) {
+        self.hasScrollView =YES;
         MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizerNavbar:)];
         panRecognizer.options = options;
         panRecognizer.maximumNumberOfTouches = 1;
         panRecognizer.minimumNumberOfTouches = 1;
         [self.navigationBar addGestureRecognizer:panRecognizer];
+    }else{
+        self.hasScrollView =NO;
     }
 }
 
@@ -213,12 +217,12 @@ NSString * const LAST_POINT = @"LAST_POINT";
         view.tag =203;
         [[[UIApplication sharedApplication] keyWindow]insertSubview:view belowSubview:self.view];
     }
-
+    
 }
 
 -(void)scrollRecognizerNavbar:(MHGestureRecognizerWithOptions *)recognizer{
     [self setImageToWindow:recognizer];
-    [self changeFrameWithRecognizer:recognizer];    
+    [self changeFrameWithRecognizer:recognizer];
 }
 - (void)scrollRecognizerView:(MHGestureRecognizerWithOptions *)recognizer{
     [self setImageToWindow:recognizer];
@@ -275,7 +279,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    return YES;
+    return self.hasScrollView;
 }
 
 
