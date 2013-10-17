@@ -1,5 +1,7 @@
 MHDismissModalView
 ==================
+![alt tag](https://dl.dropboxusercontent.com/u/17911939/Dismiss.gif)
+
 Setup
 --------------------
 
