@@ -16,6 +16,10 @@ Install MHDismissModalView without a ScrollView
 
 		  [self.navigationController installMHDismissModalViewWithOptions:[[MHDismissModalViewOptions alloc] initWithScrollView:nil theme:MHModalThemeWhite]];
 
+Global Call for all Modal Views (AppDelegate)
+
+[[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite];
+
 
 
 
