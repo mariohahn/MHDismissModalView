@@ -13,6 +13,7 @@
 NSString * const WAS_UNDER_ZERO = @"WAS_UNDER_ZERO";
 NSString * const LAST_POINT = @"LAST_POINT";
 NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
+NSString * const IS_DISSMISING = @"IS_DISSMISING";
 
 
 @implementation MHDismissSharedManager
@@ -119,9 +120,11 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 @dynamic lastPoint;
 @dynamic hasScrollView;
 
+
 -(void)setHasScrollView:(BOOL)hasScrollView{
     objc_setAssociatedObject(self, &HAS_SCROLLVIEW, @(hasScrollView), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 -(BOOL)hasScrollView{
     return [objc_getAssociatedObject(self, &HAS_SCROLLVIEW) boolValue];
 }
@@ -129,10 +132,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 -(void)setWasUnderZero:(BOOL)wasUnderZero{
     objc_setAssociatedObject(self, &WAS_UNDER_ZERO, @(wasUnderZero), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 -(BOOL)wasUnderZero{
     return [objc_getAssociatedObject(self, &WAS_UNDER_ZERO) boolValue];
 }
-
 -(void)setLastPoint:(CGFloat)lastPoint{
     objc_setAssociatedObject(self, &LAST_POINT, @(lastPoint), OBJC_ASSOCIATION_COPY);
 }
@@ -140,8 +143,17 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     return [objc_getAssociatedObject(self, &LAST_POINT) floatValue];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y<=-(self.navigationBar.frame.size.height+20)) {
-        [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
+    if (!self.hasScrollView) {
+        if (self.view.frame.origin.y>1) {
+            [scrollView setContentOffset:CGPointMake(0, 0)];
+        }
+        if (scrollView.contentOffset.y<0) {
+            [scrollView setContentOffset:CGPointMake(0, 0)];
+        }
+    }else{
+        if (scrollView.contentOffset.y<=-(self.navigationBar.frame.size.height+20)) {
+            [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
+        }
     }
 }
 
@@ -279,7 +291,18 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    return self.hasScrollView;
+
+    if ([otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView*)otherGestureRecognizer.view;
+        scrollView.delegate = self;
+        if (!self.hasScrollView && scrollView.contentOffset.y >=0) {
+            if (scrollView.contentOffset.y ==0) {
+                return YES;
+            }
+            return NO;
+        }
+    }
+    return YES;
 }
 
 
