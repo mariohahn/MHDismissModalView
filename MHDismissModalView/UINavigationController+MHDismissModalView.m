@@ -55,9 +55,16 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 }
 
 -(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options{
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"UINavigationControllerDidShowViewControllerNotification" object:nil queue:nil usingBlock:^(NSNotification *note) {
+    
+    NSString *oberserverName = @"UINavigationController";
+    oberserverName = [[oberserverName stringByAppendingString:@"DidShowViewController"]stringByAppendingString:@"Notification"];
+    
+    [[NSNotificationCenter defaultCenter]addObserverForName:oberserverName object:nil queue:nil usingBlock:^(NSNotification *note) {
         
-        UIViewController *viewController =  [[note userInfo] objectForKey:@"UINavigationControllerNextVisibleViewController"];
+        NSString *objectForKey = @"UINavigationController";
+        objectForKey = [objectForKey stringByAppendingString:@"NextVisibleViewController"];
+        
+        UIViewController *viewController =  [[note userInfo] objectForKey:objectForKey];
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
             rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
