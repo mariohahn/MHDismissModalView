@@ -56,13 +56,31 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 -(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options{
     [[NSNotificationCenter defaultCenter]addObserverForName:@"UINavigationControllerDidShowViewControllerNotification" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
         UIViewController *viewController =  [[note userInfo] objectForKey:@"UINavigationControllerNextVisibleViewController"];
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
             rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
         }
         
-        if (![rootViewController isEqual:viewController]) {
+        BOOL firstViewControllerOfTabBar = NO;
+        if (viewController.tabBarController) {
+            for (id controller in viewController.tabBarController.viewControllers) {
+                if ([controller isKindOfClass:[UINavigationController class]]) {
+                    UINavigationController *nav = (UINavigationController*)controller;
+                    if (nav.viewControllers.count) {
+                        if ([[nav.viewControllers objectAtIndex:0] isEqual:viewController]) {
+                            firstViewControllerOfTabBar =YES;
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        
+        if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar) {
             id firstObject;
             if ([viewController view].subviews.count >=1) {
                 firstObject =[[viewController view].subviews objectAtIndex:0];
@@ -176,6 +194,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             break;
         case MHModalThemeWhite:{
             backGroundView.image = [image applyLightEffect];
+        }
+            break;
+        case MHModalThemeExtraWhite:{
+            backGroundView.image = [image applyExtraLightEffect];
         }
             break;
         case MHModalThemeCustomBlurColor:{
@@ -296,7 +318,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-
+    
     if ([otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView*)otherGestureRecognizer.view;
         scrollView.delegate = self;
