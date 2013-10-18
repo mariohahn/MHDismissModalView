@@ -64,7 +64,9 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         NSString *objectForKey = @"UINavigationController";
         objectForKey = [objectForKey stringByAppendingString:@"NextVisibleViewController"];
         
+        
         UIViewController *viewController =  [[note userInfo] objectForKey:objectForKey];
+        
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
             rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
@@ -81,13 +83,21 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
                             break;
                         }
                     }
-                    
                 }
+            }
+        }
+        BOOL firstNavigationViewControler = YES;
+        if (viewController.navigationController) {
+            if (![[viewController.navigationController.viewControllers objectAtIndex:0]isEqual:viewController]){
+                firstNavigationViewControler =NO;
             }
         }
         
         
-        if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar) {
+        
+        
+        
+        if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar &&  firstNavigationViewControler) {
             id firstObject;
             if ([viewController view].subviews.count >=1) {
                 firstObject =[[viewController view].subviews objectAtIndex:0];
