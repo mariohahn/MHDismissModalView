@@ -7,6 +7,7 @@
 //
 
 #import "ModalViewController.h"
+#import "ExampleViewCollectionView.h"
 
 @implementation TestCell
 
@@ -41,6 +42,12 @@
     cell.labelText.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor colorWithWhite:1 alpha:0.2];
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ExampleViewCollectionView *example = [self.storyboard instantiateViewControllerWithIdentifier:@"ExampleViewCollectionView"];
+    [self.navigationController pushViewController:example animated:YES];
+    
 }
 
 

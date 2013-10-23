@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 @end
 
 @interface MHDismissSharedManager : NSObject
+
 + (MHDismissSharedManager *)sharedDismissManager;
 -(void)installWithTheme:(MHModalTheme)theme;
 -(void)installWithCustomColor:(UIColor*)blurColor;

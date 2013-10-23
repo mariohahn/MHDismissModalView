@@ -36,6 +36,12 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 @end
 
+@interface MHDismissSharedManager()
+@property (nonatomic, strong) UINavigationController *currentNav;
+@property (assign) id<UIScrollViewDelegate> scrollViewDelegate;
+@end
+
+
 @implementation MHDismissSharedManager
 
 + (MHDismissSharedManager *)sharedDismissManager
@@ -58,15 +64,17 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     
     NSString *oberserverName = @"UINavigationController";
     oberserverName = [[oberserverName stringByAppendingString:@"DidShowViewController"]stringByAppendingString:@"Notification"];
-    
+
+
     [[NSNotificationCenter defaultCenter]addObserverForName:oberserverName object:nil queue:nil usingBlock:^(NSNotification *note) {
-        
         NSString *objectForKey = @"UINavigationController";
         objectForKey = [objectForKey stringByAppendingString:@"NextVisibleViewController"];
         
         
         UIViewController *viewController =  [[note userInfo] objectForKey:objectForKey];
-        
+        if (![viewController.navigationController isEqual:[MHDismissSharedManager sharedDismissManager].currentNav]) {
+            [MHDismissSharedManager sharedDismissManager].currentNav = nil;
+        }
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
             rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
@@ -93,15 +101,12 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             }
         }
         
-        
-        
-        
-        
-        if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar &&  firstNavigationViewControler) {
+        if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar &&  firstNavigationViewControler && ![[MHDismissSharedManager sharedDismissManager].currentNav isEqual:viewController.navigationController]) {
             id firstObject;
             if ([viewController view].subviews.count >=1) {
                 firstObject =[[viewController view].subviews objectAtIndex:0];
             }
+            [MHDismissSharedManager sharedDismissManager].currentNav =viewController.navigationController;
             MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
                                                                                                     theme:MHModalThemeWhite];
             newOptions.theme = options.theme;
@@ -112,6 +117,9 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
                 newOptions.scrollView = nil;
                 [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
             }
+        }else{
+
+
         }
     }];
     
@@ -182,6 +190,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 -(CGFloat)lastPoint{
     return [objc_getAssociatedObject(self, &LAST_POINT) floatValue];
 }
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (!self.hasScrollView) {
         if (self.view.frame.origin.y>1) {
@@ -193,14 +202,19 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     }else{
         if (scrollView.contentOffset.y<=-(self.navigationBar.frame.size.height+20)) {
             [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
+        }else{
+            scrollView.delegate = [MHDismissSharedManager sharedDismissManager].scrollViewDelegate;
         }
     }
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    scrollView.delegate = [MHDismissSharedManager sharedDismissManager].scrollViewDelegate;
 }
 
 
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
-    
     UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
     UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     
@@ -242,13 +256,13 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     
     MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizerView:)];
     panRecognizer.options = options;
-    options.scrollView.delegate =self;
     panRecognizer.delegate = self;
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
-    [self.view addGestureRecognizer:panRecognizer];
+    [[[self.viewControllers objectAtIndex:0] view] addGestureRecognizer:panRecognizer];
     
     if (options.scrollView) {
+        [MHDismissSharedManager sharedDismissManager].scrollViewDelegate = options.scrollView.delegate;
         self.hasScrollView =YES;
         MHGestureRecognizerWithOptions *panRecognizer = [[MHGestureRecognizerWithOptions alloc] initWithTarget:self action:@selector(scrollRecognizerNavbar:)];
         panRecognizer.options = options;
@@ -259,6 +273,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         self.hasScrollView =NO;
     }
 }
+
 
 -(void)setImageToWindow:(MHGestureRecognizerWithOptions*)recognizer{
     bool foundBackground =NO;
@@ -312,6 +327,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     }
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         [options.scrollView setScrollEnabled:YES];
+        if (options.scrollView) {
+            options.scrollView.delegate = [MHDismissSharedManager sharedDismissManager].scrollViewDelegate;
+        }
+        
         [UIView animateWithDuration:0.4 animations:^{
             if (self.view.frame.origin.y <self.view.frame.size.height/3) {
                 options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
@@ -333,9 +352,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         }];
     }
 }
-
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    
     if ([otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView*)otherGestureRecognizer.view;
         scrollView.delegate = self;

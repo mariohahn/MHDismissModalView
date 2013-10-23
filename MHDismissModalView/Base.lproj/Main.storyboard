@@ -7,7 +7,7 @@
         <!--Example View Collection View-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ExampleViewCollectionView" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ExampleViewCollectionView" storyboardIdentifier="ExampleViewCollectionView" id="vXZ-lx-hvc" customClass="ExampleViewCollectionView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PD2-Z9-V9E"/>
                         <viewControllerLayoutGuide type="bottom" id="ctt-gB-IIc"/>
