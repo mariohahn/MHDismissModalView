@@ -14,7 +14,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
     //Global Call to install MHDismiss
-    [[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite];
+    MHDismissIgnore *withoutScroll = [[MHDismissIgnore alloc]initWithViewControllerName:@"ModalViewControllerWithoutScrollView"
+                                                                       ignoreBlurEffect:NO
+                                                                          ignoreGesture:NO];
+    
+    [[MHDismissSharedManager sharedDismissManager]installWithTheme:MHModalThemeWhite
+                                                 withIgnoreObjects:@[withoutScroll]];
     return YES;
 }
 							

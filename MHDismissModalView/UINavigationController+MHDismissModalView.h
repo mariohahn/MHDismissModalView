@@ -21,13 +21,22 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 - (UIImage *)screenshotMH;
 @end
 
+@interface MHDismissIgnore : NSObject
+@property (nonatomic, strong) NSString *viewControllerName;
+@property (nonatomic) BOOL ignoreBlurEffect;
+@property (nonatomic) BOOL ignoreGesture;
+
+- (id)initWithViewControllerName:(NSString*)viewControllerName
+                ignoreBlurEffect:(BOOL)ignoreBlurEffect
+                   ignoreGesture:(BOOL)ignoreGesture;
+@end
+
+
 @interface MHDismissModalViewOptions : NSObject
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic) MHModalTheme theme;
-
 - (id)initWithScrollView:(UIScrollView*)scrollView
                    theme:(MHModalTheme)theme;
-
 @end
 
 @interface MHGestureRecognizerWithOptions : UIPanGestureRecognizer
@@ -39,8 +48,8 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 @interface MHDismissSharedManager : NSObject
 
 + (MHDismissSharedManager *)sharedDismissManager;
--(void)installWithTheme:(MHModalTheme)theme;
--(void)installWithCustomColor:(UIColor*)blurColor;
+-(void)installWithTheme:(MHModalTheme)theme withIgnoreObjects:(NSArray *)ignoreObjects;
+-(void)installWithCustomColor:(UIColor*)blurColor withIgnoreObjects:(NSArray *)ignoreObjects;
 @end
 
 

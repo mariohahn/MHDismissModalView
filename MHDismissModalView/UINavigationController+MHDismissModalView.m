@@ -14,10 +14,31 @@ NSString * const WAS_UNDER_ZERO = @"WAS_UNDER_ZERO";
 NSString * const LAST_POINT = @"LAST_POINT";
 NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
+
+@implementation MHDismissIgnore
+
+- (id)initWithViewControllerName:(NSString*)viewControllerName
+                ignoreBlurEffect:(BOOL)ignoreBlurEffect
+                   ignoreGesture:(BOOL)ignoreGesture{
+    self = [super init];
+    if (!self)
+        return nil;
+ 
+    self.viewControllerName = viewControllerName;
+    self.ignoreBlurEffect = ignoreBlurEffect;
+    self.ignoreGesture = ignoreGesture;
+    return self;
+}
+
+
+@end
+
+
 @interface MHDismissModalViewOptions()
 @property (nonatomic, strong) UIImage *screenShot;
 @property (nonatomic, strong) UIImageView *bluredBackground;
 @property (nonatomic, strong) UIColor *customColor;
+@property (nonatomic, strong) MHDismissIgnore *ignore;
 @end
 
 @implementation MHDismissModalViewOptions
@@ -53,14 +74,14 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     });
     return sharedDismissManagerInstance;
 }
--(void)installWithCustomColor:(UIColor *)blurColor{
+-(void)installWithCustomColor:(UIColor *)blurColor  withIgnoreObjects:(NSArray *)ignoreObjects{
     
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:MHModalThemeCustomBlurColor];
     options.customColor = blurColor;
-    [self addObserverToInstallMHDismissWithOptions:options];
+    [self addObserverToInstallMHDismissWithOptions:options ignoreObjects:ignoreObjects];
 }
 
--(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options{
+-(void)addObserverToInstallMHDismissWithOptions:(MHDismissModalViewOptions*)options  ignoreObjects:(NSArray *)ignoreObjects{
     
     NSString *oberserverName = @"UINavigationController";
     oberserverName = [[oberserverName stringByAppendingString:@"DidShowViewController"]stringByAppendingString:@"Notification"];
@@ -78,6 +99,15 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
             rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
+        }
+        MHDismissIgnore *ignoreObject =nil;
+        NSString *currentViewController = NSStringFromClass([viewController class]);
+
+        for (MHDismissIgnore *ignore in ignoreObjects) {
+            if ([currentViewController isEqualToString:ignore.viewControllerName]) {
+                ignoreObject = ignore;
+                break;
+            }
         }
         
         BOOL firstViewControllerOfTabBar = NO;
@@ -109,6 +139,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             [MHDismissSharedManager sharedDismissManager].currentNav =viewController.navigationController;
             MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
                                                                                                     theme:MHModalThemeWhite];
+            newOptions.ignore = ignoreObject;
             newOptions.theme = options.theme;
             newOptions.customColor = options.customColor;
             if ([firstObject isKindOfClass:[UIScrollView class]]) {
@@ -122,12 +153,11 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
         }
     }];
-    
 }
 
--(void)installWithTheme:(MHModalTheme)theme{
+-(void)installWithTheme:(MHModalTheme)theme withIgnoreObjects:(NSArray *)ignoreObjects{
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:theme];
-    [self addObserverToInstallMHDismissWithOptions:options];
+    [self addObserverToInstallMHDismissWithOptions:options ignoreObjects:ignoreObjects];
 }
 
 @end
@@ -244,11 +274,13 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0)];
         options.scrollView.contentInset = UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0);
         options.scrollView.backgroundColor = [UIColor clearColor];
+        if (!options.ignore.ignoreBlurEffect) {
         if (!options.scrollView) {
             [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
             [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
         }else{
             [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+        }
         }
     }
     options.screenShot = image;
@@ -259,7 +291,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     panRecognizer.delegate = self;
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
-    [[[self.viewControllers objectAtIndex:0] view] addGestureRecognizer:panRecognizer];
+    if (!options.ignore.ignoreGesture || !options.ignore) {
+        [[[self.viewControllers objectAtIndex:0] view] addGestureRecognizer:panRecognizer];
+    }
+    
     
     if (options.scrollView) {
         [MHDismissSharedManager sharedDismissManager].scrollViewDelegate = options.scrollView.delegate;
@@ -268,7 +303,9 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         panRecognizer.options = options;
         panRecognizer.maximumNumberOfTouches = 1;
         panRecognizer.minimumNumberOfTouches = 1;
-        [self.navigationBar addGestureRecognizer:panRecognizer];
+        if (!options.ignore.ignoreGesture || !options.ignore) {
+            [self.navigationBar addGestureRecognizer:panRecognizer];
+        }
     }else{
         self.hasScrollView =NO;
     }
