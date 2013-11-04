@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>0E5D2F45-7438-4554-8FEF-55B41B58F8BE</string>
+	<string>A4B477A0-3924-44C8-8DDD-F728A6B4FCE8</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MHDismissModalView</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>590019B3-C67C-4D86-AE7A-41D886DADC81</key>
-		<string>ssh://git.tailored-apps.com/MHWiesWuest.git</string>
+		<key>A2D2367C-5AE9-4EDC-A487-E38CF53928A7</key>
+		<string>https://github.com/mariohahn/MHDismissModalView.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MHDismissModalView.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>590019B3-C67C-4D86-AE7A-41D886DADC81</key>
+		<key>A2D2367C-5AE9-4EDC-A487-E38CF53928A7</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://git.tailored-apps.com/MHWiesWuest.git</string>
+	<string>https://github.com/mariohahn/MHDismissModalView.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>590019B3-C67C-4D86-AE7A-41D886DADC81</string>
+	<string>A2D2367C-5AE9-4EDC-A487-E38CF53928A7</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>590019B3-C67C-4D86-AE7A-41D886DADC81</string>
+			<string>A2D2367C-5AE9-4EDC-A487-E38CF53928A7</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MHDismissModalView</string>
 		</dict>

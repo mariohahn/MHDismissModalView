@@ -7,8 +7,8 @@
 //
 
 #import "ExampleViewCollectionView.h"
-#import "ModalViewController.h"
-#import "ModalViewControllerWithoutScrollView.h"
+#import "ExampleModalViewController.h"
+#import "ExampleModalViewWithoutScrollViewController.h"
 #import "UIImage+ImageEffects.h"
 #import "UINavigationController+MHDismissModalView.h"
 
@@ -29,12 +29,12 @@
     }
 }
 -(void)modalPresentationMHWithoutScrollView{
-    ModalViewControllerWithoutScrollView *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewControllerWithoutScrollView"];
+    ExampleModalViewWithoutScrollViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ExampleModalViewWithoutScrollViewController"];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:modal];
     [self presentViewController:nav animated:YES completion:nil];
 }
 -(void)modalPresentationMH{
-    ModalViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
+    ExampleModalViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ExampleModalViewController"];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:modal];
     [self presentViewController:nav animated:YES completion:^{
         
