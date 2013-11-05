@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, MHModalTheme) {
 };
 
 typedef NS_ENUM(NSInteger, MHModalImageTag) {
-    MHModalImageTagBackground
+    MHModalImageTagBackground =203
 };
 
 @interface UIView (MHScreenShot)
@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, MHModalImageTag) {
 @interface MHDismissModalViewOptions : NSObject
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic) MHModalTheme theme;
+
 - (id)initWithScrollView:(UIScrollView*)scrollView
                    theme:(MHModalTheme)theme;
 @end
@@ -53,8 +54,12 @@ typedef NS_ENUM(NSInteger, MHModalImageTag) {
 @interface MHDismissSharedManager : NSObject
 
 + (MHDismissSharedManager *)sharedDismissManager;
--(void)installWithTheme:(MHModalTheme)theme withIgnoreObjects:(NSArray *)ignoreObjects;
--(void)installWithCustomColor:(UIColor*)blurColor withIgnoreObjects:(NSArray *)ignoreObjects;
+
+-(void)installWithTheme:(MHModalTheme)theme
+      withIgnoreObjects:(NSArray *)ignoreObjects;
+
+-(void)installWithCustomColor:(UIColor*)blurColor
+            withIgnoreObjects:(NSArray *)ignoreObjects;
 @end
 
 

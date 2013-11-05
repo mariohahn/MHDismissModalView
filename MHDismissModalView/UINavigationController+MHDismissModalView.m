@@ -22,9 +22,9 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
                 ignoreBlurEffect:(BOOL)ignoreBlurEffect
                    ignoreGesture:(BOOL)ignoreGesture{
     self = [super init];
-    if (!self)
-        return nil;
- 
+  
+    if (!self) return nil;
+    
     self.viewControllerName = viewControllerName;
     self.ignoreBlurEffect = ignoreBlurEffect;
     self.ignoreGesture = ignoreGesture;
@@ -99,7 +99,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         }
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-            rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
+            rootViewController = [rootViewController viewControllers].firstObject;
         }
         MHDismissIgnore *ignoreObject =nil;
         NSString *currentViewController = NSStringFromClass([viewController class]);
@@ -117,7 +117,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
                 if ([controller isKindOfClass:[UINavigationController class]]) {
                     UINavigationController *nav = (UINavigationController*)controller;
                     if (nav.viewControllers.count) {
-                        if ([[nav.viewControllers objectAtIndex:0] isEqual:viewController]) {
+                        if ([nav.viewControllers.firstObject isEqual:viewController]) {
                             firstViewControllerOfTabBar =YES;
                             break;
                         }
@@ -127,7 +127,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         }
         BOOL firstNavigationViewControler = YES;
         if (viewController.navigationController) {
-            if (![[viewController.navigationController.viewControllers objectAtIndex:0]isEqual:viewController]){
+            if (![viewController.navigationController.viewControllers.firstObject isEqual:viewController]){
                 firstNavigationViewControler =NO;
             }
         }
@@ -251,7 +251,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 }
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
-    UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
+    UIImage *image = [[self.viewControllers.firstObject presentingViewController].view screenshotMH];
     UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, -64, image.size.width, image.size.height)];
     if (OSVersion >=7) {
         backGroundView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -277,6 +277,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         default:
             break;
     }
+    backGroundView.tag = MHModalImageTagBackground;
     backGroundView.tag =203;
     if (options.theme != MHModalThemeNoBlur) {
         [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake([self offsetHeight], 0, 0, 0)];
@@ -284,10 +285,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         options.scrollView.backgroundColor = [UIColor clearColor];
         if (!options.ignore.ignoreBlurEffect) {
         if (!options.scrollView) {
-            [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
-            [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
+            [[self.viewControllers.firstObject view] addSubview:backGroundView];
+            [[self.viewControllers.firstObject view] sendSubviewToBack:backGroundView];
         }else{
-            [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
+            [[self.viewControllers.firstObject view] insertSubview:backGroundView belowSubview:options.scrollView];
         }
         }
     }
@@ -300,7 +301,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
     if (!options.ignore.ignoreGesture || !options.ignore) {
-        [[[self.viewControllers objectAtIndex:0] view] addGestureRecognizer:panRecognizer];
+        [[self.viewControllers.firstObject view] addGestureRecognizer:panRecognizer];
     }
     
     
