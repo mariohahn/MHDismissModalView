@@ -425,6 +425,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MHDismissModalView/MHDismissModalView-Prefix.pch";
 				INFOPLIST_FILE = "MHDismissModalView/MHDismissModalView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -438,6 +439,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MHDismissModalView/MHDismissModalView-Prefix.pch";
 				INFOPLIST_FILE = "MHDismissModalView/MHDismissModalView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -504,6 +506,7 @@
 				F546C57717FEBEAF00CC2E06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F546C57817FEBEAF00CC2E06 /* Build configuration list for PBXNativeTarget "MHDismissModalViewTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +515,7 @@
 				F546C57A17FEBEAF00CC2E06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

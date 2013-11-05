@@ -15,6 +15,7 @@ NSString * const LAST_POINT = @"LAST_POINT";
 NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 
+
 @implementation MHDismissIgnore
 
 - (id)initWithViewControllerName:(NSString*)viewControllerName
@@ -230,8 +231,8 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             [scrollView setContentOffset:CGPointMake(0, 0)];
         }
     }else{
-        if (scrollView.contentOffset.y<=-(self.navigationBar.frame.size.height+20)) {
-            [scrollView setContentOffset:CGPointMake(0,  -(self.navigationBar.frame.size.height+20))];
+        if (scrollView.contentOffset.y<=-([self offsetHeight])) {
+            [scrollView setContentOffset:CGPointMake(0,  -([self offsetHeight]))];
         }else{
             scrollView.delegate = [MHDismissSharedManager sharedDismissManager].scrollViewDelegate;
         }
@@ -242,12 +243,19 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     scrollView.delegate = [MHDismissSharedManager sharedDismissManager].scrollViewDelegate;
 }
 
-
+-(CGFloat)offsetHeight{
+    if (OSVersion >=7) {
+      return  self.navigationBar.frame.size.height+20;
+    }
+    return 0;
+}
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
     UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
-    UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-    
+    UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, -64, image.size.width, image.size.height)];
+    if (OSVersion >=7) {
+        backGroundView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    }
     switch (options.theme) {
         case MHModalThemeBlack:{
             backGroundView.image = [image applyDarkEffect];
@@ -271,8 +279,8 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     }
     backGroundView.tag =203;
     if (options.theme != MHModalThemeNoBlur) {
-        [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0)];
-        options.scrollView.contentInset = UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0);
+        [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake([self offsetHeight], 0, 0, 0)];
+        options.scrollView.contentInset = UIEdgeInsetsMake([self offsetHeight], 0, 0, 0);
         options.scrollView.backgroundColor = [UIColor clearColor];
         if (!options.ignore.ignoreBlurEffect) {
         if (!options.scrollView) {
@@ -335,7 +343,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 - (void)scrollRecognizerView:(MHGestureRecognizerWithOptions *)recognizer{
     [self setImageToWindow:recognizer];
     MHDismissModalViewOptions *options = recognizer.options;
-    if (options.scrollView.contentOffset.y==-(self.navigationBar.frame.size.height+20) || !options.scrollView) {
+    if (options.scrollView.contentOffset.y==-([self offsetHeight]) || !options.scrollView) {
         [self changeFrameWithRecognizer:recognizer];
     }
 }
@@ -351,13 +359,19 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         [options.scrollView setScrollEnabled:NO];
         if (self.view.frame.origin.y>=0 || !self.wasUnderZero) {
-            
-            options.bluredBackground.frame = CGRectMake(0, -(translatedPoint.y-self.lastPoint), options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+            if (OSVersion >=7) {
+                options.bluredBackground.frame = CGRectMake(0, -(translatedPoint.y-self.lastPoint), options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+            }else{
+                options.bluredBackground.frame = CGRectMake(0, -(translatedPoint.y-self.lastPoint)-64, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+            }
             self.view.frame = CGRectMake(0, translatedPoint.y-self.lastPoint, self.view.frame.size.width, self.view.frame.size.height);
             self.wasUnderZero =YES;
             if (self.view.frame.origin.y <0) {
-                options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
-                
+                if (OSVersion >=7) {
+                    options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                }else{
+                    options.bluredBackground.frame = CGRectMake(0, -64, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                }
                 self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             }
         }
@@ -370,10 +384,18 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         
         [UIView animateWithDuration:0.4 animations:^{
             if (self.view.frame.origin.y <self.view.frame.size.height/3) {
-                options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                if (OSVersion >=7) {
+                    options.bluredBackground.frame = CGRectMake(0, 0, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                }else{
+                    options.bluredBackground.frame = CGRectMake(0, -64, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                }
                 self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             }else{
-                options.bluredBackground.frame = CGRectMake(0, -self.view.frame.size.height, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                if (OSVersion >=7) {
+                    options.bluredBackground.frame = CGRectMake(0, -self.view.frame.size.height, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                }else{
+                    options.bluredBackground.frame = CGRectMake(0, -self.view.frame.size.height-64, options.bluredBackground.frame.size.width, options.bluredBackground.frame.size.height);
+                }
                 self.view.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
             }
         } completion:^(BOOL finished) {

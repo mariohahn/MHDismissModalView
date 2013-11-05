@@ -8,6 +8,7 @@
 
 
 #import <UIKit/UIKit.h>
+#define OSVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 
 typedef NS_ENUM(NSUInteger, MHModalTheme) {
     MHModalThemeBlack,
