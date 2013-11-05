@@ -1,5 +1,5 @@
 //
-//  ModalViewControllerWithoutScrollView.h
+//  ExampleModalViewWithoutScrollViewController.h
 //  MHDismissModalView
 //
 //  Created by Mario Hahn on 07.10.13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ModalViewControllerWithoutScrollView : UIViewController
+@interface ExampleModalViewWithoutScrollViewController : UIViewController
 
 @end

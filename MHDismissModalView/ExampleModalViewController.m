@@ -1,22 +1,22 @@
 //
-//  ModalViewController.m
+//  ExampleModalViewController.m
 //  MHDismissModalView
 //
 //  Created by Mario Hahn on 04.10.13.
 //  Copyright (c) 2013 Mario Hahn. All rights reserved.
 //
 
-#import "ModalViewController.h"
+#import "ExampleModalViewController.h"
 #import "ExampleViewCollectionView.h"
 
 @implementation TestCell
 
 @end
-@interface ModalViewController ()
+@interface ExampleModalViewController ()
 
 @end
 
-@implementation ModalViewController
+@implementation ExampleModalViewController
 
 -(void)viewDidLoad{
     
@@ -27,16 +27,16 @@
 }
 
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 60;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TestCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TestCell"];
     cell.labelText.text = [NSString stringWithFormat:@"Row %li",(long)indexPath.row];
     cell.labelText.textColor = [UIColor blackColor];
@@ -44,7 +44,7 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ExampleViewCollectionView *example = [self.storyboard instantiateViewControllerWithIdentifier:@"ExampleViewCollectionView"];
     [self.navigationController pushViewController:example animated:YES];
     
