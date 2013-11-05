@@ -23,7 +23,8 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
                    ignoreGesture:(BOOL)ignoreGesture{
     self = [super init];
   
-    if (!self) return nil;
+    if (!self)
+        return nil;
     
     self.viewControllerName = viewControllerName;
     self.ignoreBlurEffect = ignoreBlurEffect;
@@ -47,8 +48,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 - (id)initWithScrollView:(UIScrollView*)scrollView
                    theme:(MHModalTheme)theme{
     self = [super init];
+    
     if (!self)
         return nil;
+    
     self.scrollView = scrollView;
     self.screenShot = nil;
     self.theme = theme;
@@ -135,7 +138,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar &&  firstNavigationViewControler && ![[MHDismissSharedManager sharedDismissManager].currentNav isEqual:viewController.navigationController]) {
             id firstObject;
             if ([viewController view].subviews.count >=1) {
-                firstObject =[[viewController view].subviews objectAtIndex:0];
+                firstObject =[viewController view].subviews.firstObject;
             }
             [MHDismissSharedManager sharedDismissManager].currentNav =viewController.navigationController;
             MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
@@ -277,7 +280,6 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         default:
             break;
     }
-    backGroundView.tag = MHModalImageTagBackground;
     backGroundView.tag =203;
     if (options.theme != MHModalThemeNoBlur) {
         [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake([self offsetHeight], 0, 0, 0)];
