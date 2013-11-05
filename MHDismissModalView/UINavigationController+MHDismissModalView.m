@@ -45,9 +45,10 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 - (id)initWithScrollView:(UIScrollView*)scrollView
                    theme:(MHModalTheme)theme{
+    
     self = [super init];
-    if (!self)
-        return nil;
+    if (!self)return nil;
+    
     self.scrollView = scrollView;
     self.screenShot = nil;
     self.theme = theme;
@@ -98,7 +99,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         }
         id rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-            rootViewController = [[rootViewController viewControllers] objectAtIndex:0];
+            rootViewController = [[rootViewController viewControllers] firstObject];
         }
         MHDismissIgnore *ignoreObject =nil;
         NSString *currentViewController = NSStringFromClass([viewController class]);
@@ -116,7 +117,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
                 if ([controller isKindOfClass:[UINavigationController class]]) {
                     UINavigationController *nav = (UINavigationController*)controller;
                     if (nav.viewControllers.count) {
-                        if ([[nav.viewControllers objectAtIndex:0] isEqual:viewController]) {
+                        if ([nav.viewControllers.firstObject isEqual:viewController]) {
                             firstViewControllerOfTabBar =YES;
                             break;
                         }
@@ -126,7 +127,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         }
         BOOL firstNavigationViewControler = YES;
         if (viewController.navigationController) {
-            if (![[viewController.navigationController.viewControllers objectAtIndex:0]isEqual:viewController]){
+            if (![viewController.navigationController.viewControllers.firstObject isEqual:viewController]){
                 firstNavigationViewControler =NO;
             }
         }
@@ -134,7 +135,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar &&  firstNavigationViewControler && ![[MHDismissSharedManager sharedDismissManager].currentNav isEqual:viewController.navigationController]) {
             id firstObject;
             if ([viewController view].subviews.count >=1) {
-                firstObject =[[viewController view].subviews objectAtIndex:0];
+                firstObject =[[viewController view].subviews firstObject];
             }
             [MHDismissSharedManager sharedDismissManager].currentNav =viewController.navigationController;
             MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
@@ -164,7 +165,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 @implementation UIView (MHScreenShot)
 
-- (UIImage *)screenshotMH{
+- (UIImage *)screenshotMH {
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
     if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
         [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
@@ -245,7 +246,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 
 -(void)installMHDismissModalViewWithOptions:(MHDismissModalViewOptions*)options{
-    UIImage *image = [[[self.viewControllers objectAtIndex:0] presentingViewController].view screenshotMH];
+    UIImage *image = [[self.viewControllers.firstObject presentingViewController].view screenshotMH];
     UIImageView *backGroundView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     
     switch (options.theme) {
@@ -269,18 +270,18 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         default:
             break;
     }
-    backGroundView.tag =203;
+    backGroundView.tag = MHModalImageTagBackground;
     if (options.theme != MHModalThemeNoBlur) {
         [options.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0)];
         options.scrollView.contentInset = UIEdgeInsetsMake(self.navigationBar.frame.size.height+20, 0, 0, 0);
         options.scrollView.backgroundColor = [UIColor clearColor];
         if (!options.ignore.ignoreBlurEffect) {
-        if (!options.scrollView) {
-            [[[self.viewControllers objectAtIndex:0] view] addSubview:backGroundView];
-            [[[self.viewControllers objectAtIndex:0] view] sendSubviewToBack:backGroundView];
-        }else{
-            [[[self.viewControllers objectAtIndex:0] view] insertSubview:backGroundView belowSubview:options.scrollView];
-        }
+            if (!options.scrollView) {
+                [[self.viewControllers.firstObject view] addSubview:backGroundView];
+                [[self.viewControllers.firstObject view] sendSubviewToBack:backGroundView];
+            }else{
+                [[self.viewControllers.firstObject view] insertSubview:backGroundView belowSubview:options.scrollView];
+            }
         }
     }
     options.screenShot = image;
@@ -292,7 +293,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     panRecognizer.maximumNumberOfTouches = 1;
     panRecognizer.minimumNumberOfTouches = 1;
     if (!options.ignore.ignoreGesture || !options.ignore) {
-        [[[self.viewControllers objectAtIndex:0] view] addGestureRecognizer:panRecognizer];
+        [[self.viewControllers.firstObject view] addGestureRecognizer:panRecognizer];
     }
     
     
@@ -315,14 +316,14 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 -(void)setImageToWindow:(MHGestureRecognizerWithOptions*)recognizer{
     bool foundBackground =NO;
     for (id view in [[UIApplication sharedApplication] keyWindow].subviews) {
-        if ([view isKindOfClass:[UIImageView class]] && [view tag]==203) {
+        if ([view isKindOfClass:[UIImageView class]] && [view tag] == MHModalImageTagBackground) {
             foundBackground = YES;
         }
     }
     if (!foundBackground) {
         UIImageView *view =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, recognizer.options.screenShot.size.width, recognizer.options.screenShot.size.height)];
         view.image = recognizer.options.screenShot;
-        view.tag =203;
+        view.tag = MHModalImageTagBackground;
         [[[UIApplication sharedApplication] keyWindow]insertSubview:view belowSubview:self.view];
     }
     
@@ -380,7 +381,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             if (self.view.frame.origin.y == self.view.frame.size.height) {
                 [self dismissViewControllerAnimated:NO completion:^{
                     for (id view in [[UIApplication sharedApplication] keyWindow].subviews) {
-                        if ([view isKindOfClass:[UIImageView class]] && [view tag]==203){
+                        if ([view isKindOfClass:[UIImageView class]] && [view tag]== MHModalImageTagBackground){
                             [view removeFromSuperview];
                         }
                     }

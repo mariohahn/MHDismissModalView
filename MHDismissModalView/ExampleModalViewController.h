@@ -1,5 +1,5 @@
 //
-//  ModalViewController.h
+//  ExampleModalViewController.h
 //  MHDismissModalView
 //
 //  Created by Mario Hahn on 04.10.13.
@@ -13,10 +13,10 @@
 @property (nonatomic,strong)IBOutlet UILabel *labelText;
 @end
 
-@interface ModalViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface ExampleModalViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong)IBOutlet UITableView *tableView;
 @property(nonatomic,strong) UIView *oldView;
-@property(nonatomic,strong) UIImageView *bluredView;
-@property(nonatomic,strong) UIImage *screenShotImage;
+@property(nonatomic,strong) UIImageView *blurredView;
+@property(nonatomic,strong) UIImage *screenshotImage;
 
 @end

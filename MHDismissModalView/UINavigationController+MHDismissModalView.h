@@ -9,12 +9,16 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, MHModalTheme) {
+typedef NS_ENUM(NSInteger, MHModalTheme) {
     MHModalThemeBlack,
     MHModalThemeWhite,
     MHModalThemeNoBlur,
     MHModalThemeExtraWhite,
     MHModalThemeCustomBlurColor
+};
+
+typedef NS_ENUM(NSInteger, MHModalImageTag) {
+    MHModalImageTagBackground
 };
 
 @interface UIView (MHScreenShot)
@@ -51,8 +55,6 @@ typedef NS_ENUM(NSUInteger, MHModalTheme) {
 -(void)installWithTheme:(MHModalTheme)theme withIgnoreObjects:(NSArray *)ignoreObjects;
 -(void)installWithCustomColor:(UIColor*)blurColor withIgnoreObjects:(NSArray *)ignoreObjects;
 @end
-
-
 
 
 @interface UINavigationController (MHDismissModalView)<UIGestureRecognizerDelegate,UIScrollViewDelegate>

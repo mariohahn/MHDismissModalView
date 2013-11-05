@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4ZY-MI-1Qv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4ZY-MI-1Qv">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <scenes>
         <!--Example View Collection View-->
@@ -63,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="109" y="45"/>
         </scene>
-        <!--Modal View Controller Without Scroll View-->
+        <!--Example Modal View Without Scroll View Controller-->
         <scene sceneID="UbF-I3-twF">
             <objects>
-                <viewController restorationIdentifier="ModalViewControllerWithoutScrollView" storyboardIdentifier="ModalViewControllerWithoutScrollView" id="DfL-g6-W8x" customClass="ModalViewControllerWithoutScrollView" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ExampleModalViewWithoutScrollViewController" storyboardIdentifier="ExampleModalViewWithoutScrollViewController" id="DfL-g6-W8x" customClass="ExampleModalViewWithoutScrollViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FB7-Xa-b8z"/>
                         <viewControllerLayoutGuide type="bottom" id="71P-v8-mFL"/>
@@ -100,10 +100,10 @@
             </objects>
             <point key="canvasLocation" x="540" y="-156"/>
         </scene>
-        <!--Modal View Controller-->
+        <!--Example Modal View Controller-->
         <scene sceneID="htY-14-HHM">
             <objects>
-                <viewController restorationIdentifier="ModalViewController" storyboardIdentifier="ModalViewController" id="Lxl-Uk-NCl" customClass="ModalViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ExampleModalViewController" storyboardIdentifier="ExampleModalViewController" id="Lxl-Uk-NCl" customClass="ExampleModalViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zm3-Ms-B5b"/>
                         <viewControllerLayoutGuide type="bottom" id="WDt-dK-74k"/>

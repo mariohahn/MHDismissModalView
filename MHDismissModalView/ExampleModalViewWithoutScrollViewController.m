@@ -1,19 +1,19 @@
 //
-//  ModalViewControllerWithoutScrollView.m
+//  ExampleModalViewWithoutScrollViewController.m
 //  MHDismissModalView
 //
 //  Created by Mario Hahn on 07.10.13.
 //  Copyright (c) 2013 Mario Hahn. All rights reserved.
 //
 
-#import "ModalViewControllerWithoutScrollView.h"
+#import "ExampleModalViewWithoutScrollViewController.h"
 #import "UINavigationController+MHDismissModalView.h"
 
-@interface ModalViewControllerWithoutScrollView ()
+@interface ExampleModalViewWithoutScrollViewController ()
 
 @end
 
-@implementation ModalViewControllerWithoutScrollView
+@implementation ExampleModalViewWithoutScrollViewController
 
 - (void)viewDidLoad
 {

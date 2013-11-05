@@ -21,12 +21,12 @@
 		F546C57017FEBEAF00CC2E06 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F546C56E17FEBEAF00CC2E06 /* InfoPlist.strings */; };
 		F546C57217FEBEAF00CC2E06 /* MHDismissModalViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C57117FEBEAF00CC2E06 /* MHDismissModalViewTests.m */; };
 		F546C5D717FEE39100CC2E06 /* ExampleViewCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5D617FEE39100CC2E06 /* ExampleViewCollectionView.m */; };
-		F546C5DA17FEE59200CC2E06 /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5D917FEE59200CC2E06 /* ModalViewController.m */; };
+		F546C5DA17FEE59200CC2E06 /* ExampleModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5D917FEE59200CC2E06 /* ExampleModalViewController.m */; };
 		F546C5DD17FEE6B400CC2E06 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5DC17FEE6B400CC2E06 /* UIImage+ImageEffects.m */; };
 		F546C5DF17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F546C5DE17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png */; };
 		F546C5E217FEF67600CC2E06 /* multitasking_screen_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F546C5E117FEF67600CC2E06 /* multitasking_screen_2x.png */; };
 		F546C5E81802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5E61802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m */; };
-		F546C5EB1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5EA1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m */; };
+		F546C5EB1802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F546C5EA1802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.m */; };
 		F546C5ED1802FA0800CC2E06 /* photos_moments_screen_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */; };
 /* End PBXBuildFile section */
 
@@ -60,16 +60,16 @@
 		F546C57117FEBEAF00CC2E06 /* MHDismissModalViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHDismissModalViewTests.m; sourceTree = "<group>"; };
 		F546C5D517FEE39100CC2E06 /* ExampleViewCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleViewCollectionView.h; sourceTree = "<group>"; };
 		F546C5D617FEE39100CC2E06 /* ExampleViewCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleViewCollectionView.m; sourceTree = "<group>"; };
-		F546C5D817FEE59200CC2E06 /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewController.h; sourceTree = "<group>"; };
-		F546C5D917FEE59200CC2E06 /* ModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalViewController.m; sourceTree = "<group>"; };
+		F546C5D817FEE59200CC2E06 /* ExampleModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleModalViewController.h; sourceTree = "<group>"; };
+		F546C5D917FEE59200CC2E06 /* ExampleModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleModalViewController.m; sourceTree = "<group>"; };
 		F546C5DB17FEE6B400CC2E06 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		F546C5DC17FEE6B400CC2E06 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		F546C5DE17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itunesradio_mystations_2x.png; sourceTree = "<group>"; };
 		F546C5E117FEF67600CC2E06 /* multitasking_screen_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multitasking_screen_2x.png; sourceTree = "<group>"; };
 		F546C5E61802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+MHDismissModalView.m"; sourceTree = "<group>"; };
 		F546C5E71802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+MHDismissModalView.h"; sourceTree = "<group>"; };
-		F546C5E91802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewControllerWithoutScrollView.h; sourceTree = "<group>"; };
-		F546C5EA1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalViewControllerWithoutScrollView.m; sourceTree = "<group>"; };
+		F546C5E91802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleModalViewWithoutScrollViewController.h; sourceTree = "<group>"; };
+		F546C5EA1802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleModalViewWithoutScrollViewController.m; sourceTree = "<group>"; };
 		F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photos_moments_screen_2x.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +97,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		551501AE1827CE2E00AF1F27 /* Example View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F546C5D817FEE59200CC2E06 /* ExampleModalViewController.h */,
+				F546C5D917FEE59200CC2E06 /* ExampleModalViewController.m */,
+				F546C5E91802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.h */,
+				F546C5EA1802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.m */,
+			);
+			name = "Example View Controller";
+			sourceTree = "<group>";
+		};
+		551501AF1827CE5100AF1F27 /* Example Collection View */ = {
+			isa = PBXGroup;
+			children = (
+				F546C5D517FEE39100CC2E06 /* ExampleViewCollectionView.h */,
+				F546C5D617FEE39100CC2E06 /* ExampleViewCollectionView.m */,
+			);
+			name = "Example Collection View";
+			sourceTree = "<group>";
+		};
+		551501B01827CEA400AF1F27 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F546C5DE17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png */,
+				F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */,
+				F546C5E117FEF67600CC2E06 /* multitasking_screen_2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		F546C53A17FEBEAF00CC2E06 = {
 			isa = PBXGroup;
 			children = (
@@ -132,18 +162,12 @@
 			children = (
 				F546C55517FEBEAF00CC2E06 /* AppDelegate.h */,
 				F546C55617FEBEAF00CC2E06 /* AppDelegate.m */,
-				F546C55817FEBEAF00CC2E06 /* Main.storyboard */,
-				F546C5D817FEE59200CC2E06 /* ModalViewController.h */,
-				F546C5D917FEE59200CC2E06 /* ModalViewController.m */,
-				F546C5E91802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.h */,
-				F546C5EA1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m */,
-				F546C5D517FEE39100CC2E06 /* ExampleViewCollectionView.h */,
-				F546C5D617FEE39100CC2E06 /* ExampleViewCollectionView.m */,
-				F546C5E017FEF55400CC2E06 /* WHAT I NEED TO IMPORT */,
-				F546C5DE17FEEB6F00CC2E06 /* itunesradio_mystations_2x.png */,
-				F546C5EC1802FA0800CC2E06 /* photos_moments_screen_2x.png */,
-				F546C5E117FEF67600CC2E06 /* multitasking_screen_2x.png */,
+				551501AE1827CE2E00AF1F27 /* Example View Controller */,
+				551501AF1827CE5100AF1F27 /* Example Collection View */,
+				F546C5E017FEF55400CC2E06 /* UINavigationController+MHDismissModalView */,
+				551501B01827CEA400AF1F27 /* Images */,
 				F546C55E17FEBEAF00CC2E06 /* Images.xcassets */,
+				F546C55817FEBEAF00CC2E06 /* Main.storyboard */,
 				F546C54D17FEBEAF00CC2E06 /* Supporting Files */,
 			);
 			path = MHDismissModalView;
@@ -178,15 +202,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F546C5E017FEF55400CC2E06 /* WHAT I NEED TO IMPORT */ = {
+		F546C5E017FEF55400CC2E06 /* UINavigationController+MHDismissModalView */ = {
 			isa = PBXGroup;
 			children = (
-				F546C5DB17FEE6B400CC2E06 /* UIImage+ImageEffects.h */,
-				F546C5DC17FEE6B400CC2E06 /* UIImage+ImageEffects.m */,
 				F546C5E71802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.h */,
 				F546C5E61802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m */,
+				F546C5DB17FEE6B400CC2E06 /* UIImage+ImageEffects.h */,
+				F546C5DC17FEE6B400CC2E06 /* UIImage+ImageEffects.m */,
 			);
-			name = "WHAT I NEED TO IMPORT";
+			name = "UINavigationController+MHDismissModalView";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,7 +261,7 @@
 				ORGANIZATIONNAME = "Mario Hahn";
 				TargetAttributes = {
 					F546C56317FEBEAF00CC2E06 = {
-						TestTargetID = F546C54217FEBEAF00CC2E06;
+						TestTargetID = F546C54217FEBEAF00CC2E06 /* MHDismissModalView */;
 					};
 				};
 			};
@@ -291,8 +315,8 @@
 			files = (
 				F546C5D717FEE39100CC2E06 /* ExampleViewCollectionView.m in Sources */,
 				F546C5DD17FEE6B400CC2E06 /* UIImage+ImageEffects.m in Sources */,
-				F546C5DA17FEE59200CC2E06 /* ModalViewController.m in Sources */,
-				F546C5EB1802AF9800CC2E06 /* ModalViewControllerWithoutScrollView.m in Sources */,
+				F546C5DA17FEE59200CC2E06 /* ExampleModalViewController.m in Sources */,
+				F546C5EB1802AF9800CC2E06 /* ExampleModalViewWithoutScrollViewController.m in Sources */,
 				F546C55717FEBEAF00CC2E06 /* AppDelegate.m in Sources */,
 				F546C5E81802AA3B00CC2E06 /* UINavigationController+MHDismissModalView.m in Sources */,
 				F546C55317FEBEAF00CC2E06 /* main.m in Sources */,
@@ -504,6 +528,7 @@
 				F546C57717FEBEAF00CC2E06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F546C57817FEBEAF00CC2E06 /* Build configuration list for PBXNativeTarget "MHDismissModalViewTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +537,7 @@
 				F546C57A17FEBEAF00CC2E06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
