@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+
 
 @interface IVCollectionViewCell : UICollectionViewCell
 @property (nonatomic,strong)IBOutlet UIImageView *iv;
 @end
 
-@interface ExampleViewCollectionView : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface ExampleViewCollectionView : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 @property (nonatomic,strong)IBOutlet UICollectionView *collectionView;
 @end

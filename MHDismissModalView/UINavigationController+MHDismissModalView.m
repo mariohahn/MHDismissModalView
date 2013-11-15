@@ -135,11 +135,21 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             }
         }
         
-        if (![rootViewController isEqual:viewController] && !firstViewControllerOfTabBar &&  firstNavigationViewControler && ![[MHDismissSharedManager sharedDismissManager].currentNav isEqual:viewController.navigationController]) {
+        BOOL isAppleComposeViewController = NO;
+        for (NSString *string in @[@"MFMailComposeInternalView",@"CKSMSCompose",@"UIPrintPanelTableView"]) {
+            if ([currentViewController isEqualToString:[string stringByAppendingString:@"Controller"]]) {
+                isAppleComposeViewController =YES;
+            }
+        }
+        
+        
+        
+        if (![rootViewController isEqual:viewController] && !isAppleComposeViewController && !firstViewControllerOfTabBar &&  firstNavigationViewControler && ![[MHDismissSharedManager sharedDismissManager].currentNav isEqual:viewController.navigationController]) {
             id firstObject;
             if ([viewController view].subviews.count >=1) {
                 firstObject =[viewController view].subviews.firstObject;
             }
+            
             [MHDismissSharedManager sharedDismissManager].currentNav =viewController.navigationController;
             MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
                                                                                                     theme:MHModalThemeWhite];

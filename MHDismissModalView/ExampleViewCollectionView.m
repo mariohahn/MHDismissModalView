@@ -26,8 +26,12 @@
     if (self.navigationController.viewControllers.count ==1) {
         self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc]initWithTitle:@"ScrollView" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMH)],[[UIBarButtonItem alloc]initWithTitle:@"View" style:UIBarButtonItemStyleBordered target:self action:@selector(modalPresentationMHWithoutScrollView)]];
 
+        
     }
 }
+
+
+
 -(void)modalPresentationMHWithoutScrollView{
     ExampleModalViewWithoutScrollViewController *modal = [self.storyboard instantiateViewControllerWithIdentifier:@"ExampleModalViewWithoutScrollViewController"];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:modal];
@@ -40,6 +44,8 @@
         
     }];
 }
+
+
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return 10;
