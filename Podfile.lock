@@ -1,0 +1,10 @@
+PODS:
+  - MHDismissModalView (1.0)
+
+DEPENDENCIES:
+  - MHDismissModalView
+
+SPEC CHECKSUMS:
+  MHDismissModalView: 8c2f91c6d3851d37d3008c98758021f84852fab1
+
+COCOAPODS: 0.28.0
