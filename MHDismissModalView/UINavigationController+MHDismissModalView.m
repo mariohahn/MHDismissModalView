@@ -69,8 +69,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 @implementation MHDismissSharedManager
 
-+ (MHDismissSharedManager *)sharedDismissManager
-{
++ (MHDismissSharedManager *)sharedDismissManager{
     static MHDismissSharedManager *sharedDismissManagerInstance = nil;
     static dispatch_once_t onceQueue;
     dispatch_once(&onceQueue, ^{
@@ -79,7 +78,6 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     return sharedDismissManagerInstance;
 }
 -(void)installWithCustomColor:(UIColor *)blurColor  withIgnoreObjects:(NSArray *)ignoreObjects{
-    
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:MHModalThemeCustomBlurColor];
     options.customColor = blurColor;
     [self addObserverToInstallMHDismissWithOptions:options ignoreObjects:ignoreObjects];
@@ -89,14 +87,13 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     
     NSString *oberserverName = @"UINavigationController";
     oberserverName = [[oberserverName stringByAppendingString:@"DidShowViewController"]stringByAppendingString:@"Notification"];
-
-
     [[NSNotificationCenter defaultCenter]addObserverForName:oberserverName object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *objectForKey = @"UINavigationController";
-        objectForKey = [objectForKey stringByAppendingString:@"NextVisibleViewController"];
+            NSString *objectForKey = @"UINavigationController";
+            objectForKey = [objectForKey stringByAppendingString:@"NextVisibleViewController"];
         
         
         UIViewController *viewController =  [[note userInfo] objectForKey:objectForKey];
+                
         if (![viewController.navigationController isEqual:[MHDismissSharedManager sharedDismissManager].currentNav]) {
             [MHDismissSharedManager sharedDismissManager].currentNav = nil;
         }

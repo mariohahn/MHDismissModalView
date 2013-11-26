@@ -38,32 +38,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MHDismissModalView/UINavigationController+MHDismissModalView.m"
-            timestampString = "405171450.180364"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-addObserverToInstallMHDismissWithOptions:ignoreObjects:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MHDismissModalView/UINavigationController+MHDismissModalView.m"
-            timestampString = "405172458.132407"
+            timestampString = "406811835.493863"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
-            landmarkName = "-gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
+            landmarkName = "-changeFrameWithRecognizer:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,28 +58,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MHDismissModalView/UINavigationController+MHDismissModalView.m"
-            timestampString = "405171450.180364"
+            timestampString = "406811835.493863"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "-addObserverToInstallMHDismissWithOptions:ignoreObjects:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MHDismissModalView/UINavigationController+MHDismissModalView.m"
-            timestampString = "405172458.132407"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "-installMHDismissModalViewWithOptions:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MHDismissModalView/UINavigationController+MHDismissModalView.m"
+            timestampString = "406811835.493863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "-offsetHeight"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
