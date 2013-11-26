@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/mariohahn/MHDismissModalView'
   s.author       = { 'Mario Hahn' => 'https://twitter.com/mario_hahn' }
   s.source_files = ['MHDismissModalView/MHDismiss/']
-  s.source       = { :git => 'https://github.com/mariohahn/MHDismissModalView.git', :tag => '1.0.0' }
+  s.source       = { :git => 'https://github.com/mariohahn/MHDismissModalView.git', :tag => 'v1.0' }
   s.requires_arc = true
 end
