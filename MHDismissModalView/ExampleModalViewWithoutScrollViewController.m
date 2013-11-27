@@ -19,9 +19,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.title = @"Modal view without a scrollView";
-    
-    
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"present" style:UIBarButtonItemStyleBordered target:self action:@selector(presentAgain)];
 //    [self.navigationController installMHDismissModalViewWithOptions:[[MHDismissModalViewOptions alloc] initWithScrollView:nil
 //                                                                                                                    theme:MHModalThemeWhite]];
