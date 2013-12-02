@@ -177,7 +177,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
 
 -(void)installWithTheme:(MHModalTheme)theme
-         withIgnorBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock{
+        withIgnoreBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock{
     MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:theme];
     self.ignore = IgnoreBlock;
     [self addObserverToInstallMHDismissWithOptions:options ignoreObjects:nil];

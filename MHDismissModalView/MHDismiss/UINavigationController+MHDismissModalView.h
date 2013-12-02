@@ -60,7 +60,7 @@ typedef void (^IgnoreBlock)(MHDismissIgnore *ignore);
 + (MHDismissSharedManager *)sharedDismissManager;
 
 -(void)installWithTheme:(MHModalTheme)theme
-         withIgnorBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock;
+         withIgnoreBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock;
 
 -(void)installWithTheme:(MHModalTheme)theme
       withIgnoreObjects:(NSArray *)ignoreObjects;
