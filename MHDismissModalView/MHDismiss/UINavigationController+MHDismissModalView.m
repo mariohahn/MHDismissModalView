@@ -146,6 +146,11 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             if ([viewController view].subviews.count >=1) {
                 firstObject =[viewController view].subviews.firstObject;
             }
+            if (self.ignore) {
+                ignoreObject = [[MHDismissIgnore alloc]initWithViewControllerName:currentViewController ignoreBlurEffect:NO ignoreGesture:NO];
+                self.ignore(ignoreObject);
+            }
+            
             
             [MHDismissSharedManager sharedDismissManager].currentNav =viewController.navigationController;
             MHDismissModalViewOptions *newOptions = [[MHDismissModalViewOptions alloc] initWithScrollView:firstObject
@@ -164,6 +169,13 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
 
         }
     }];
+}
+
+-(void)installWithTheme:(MHModalTheme)theme
+         withIgnorBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock{
+    MHDismissModalViewOptions *options = [[MHDismissModalViewOptions alloc]initWithScrollView:nil theme:theme];
+    self.ignore = IgnoreBlock;
+    [self addObserverToInstallMHDismissWithOptions:options ignoreObjects:nil];
 }
 
 -(void)installWithTheme:(MHModalTheme)theme withIgnoreObjects:(NSArray *)ignoreObjects{

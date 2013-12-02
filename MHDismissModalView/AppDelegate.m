@@ -18,8 +18,13 @@
                                                                         ignoreBlurEffect:NO
                                                                            ignoreGesture:NO];
     
-    [[MHDismissSharedManager sharedDismissManager] installWithTheme:MHModalThemeWhite
-                                                 withIgnoreObjects:@[withoutScroll]];
+//    [[MHDismissSharedManager sharedDismissManager] installWithTheme:MHModalThemeWhite
+//                                                 withIgnoreObjects:@[withoutScroll]];
+    
+    [[MHDismissSharedManager sharedDismissManager] installWithTheme:MHModalThemeWhite withIgnorBlock:^(MHDismissIgnore *ignore) {
+        NSLog(@"%@",ignore.viewControllerName);
+    }];
+    
     return YES;
 }
 							
