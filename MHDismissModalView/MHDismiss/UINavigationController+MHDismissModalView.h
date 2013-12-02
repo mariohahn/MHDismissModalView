@@ -51,15 +51,9 @@ typedef NS_ENUM(NSInteger, MHModalImageTag) {
 
 @end
 
-typedef void (^IgnoreBlock)(MHDismissIgnore *ignore);
-
 @interface MHDismissSharedManager : NSObject
 
-@property (nonatomic, strong) IgnoreBlock ignore;
 + (MHDismissSharedManager *)sharedDismissManager;
-
--(void)installWithTheme:(MHModalTheme)theme
-         withIgnorBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock;
 
 -(void)installWithTheme:(MHModalTheme)theme
       withIgnoreObjects:(NSArray *)ignoreObjects;
