@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MHDismissModalView'
-  s.version      = '1.2'
+  s.version      = '1.3'
   s.license      = 'MIT'
   s.homepage     = 'https://github.com/mariohahn/MHDismissModalView'
   s.author = {
@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
     :tag => 'v1.2'
   }
   s.source_files = ['MHDismissModalView/MHDismiss/']
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '6.0'
   s.requires_arc = true
 end

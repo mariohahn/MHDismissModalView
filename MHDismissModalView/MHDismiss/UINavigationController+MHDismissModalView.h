@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, MHModalImageTag) {
 @property (nonatomic, strong) NSString *viewControllerName;
 @property (nonatomic) BOOL ignoreBlurEffect;
 @property (nonatomic) BOOL ignoreGesture;
+@property (nonatomic) BOOL ignoreViewController;
 
 - (id)initWithViewControllerName:(NSString*)viewControllerName
                 ignoreBlurEffect:(BOOL)ignoreBlurEffect

@@ -29,6 +29,7 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
     self.viewControllerName = viewControllerName;
     self.ignoreBlurEffect = ignoreBlurEffect;
     self.ignoreGesture = ignoreGesture;
+    self.ignoreViewController = NO;
     return self;
 }
 
@@ -93,7 +94,6 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         
         
         UIViewController *viewController =  [[note userInfo] objectForKey:objectForKey];
-                
         if (![viewController.navigationController isEqual:[MHDismissSharedManager sharedDismissManager].currentNav]) {
             [MHDismissSharedManager sharedDismissManager].currentNav = nil;
         }
@@ -158,18 +158,23 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
             newOptions.ignore = ignoreObject;
             newOptions.theme = options.theme;
             newOptions.customColor = options.customColor;
-            if ([firstObject isKindOfClass:[UIScrollView class]]) {
-                [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
-            }else{
-                newOptions.scrollView = nil;
-                [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+            
+            if (!ignoreObject.ignoreViewController) {
+                if ([firstObject isKindOfClass:[UIScrollView class]]) {
+                    [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+                }else{
+                    newOptions.scrollView = nil;
+                    [viewController.navigationController installMHDismissModalViewWithOptions:newOptions];
+                }
             }
+
         }else{
 
 
         }
     }];
 }
+
 
 -(void)installWithTheme:(MHModalTheme)theme
          withIgnorBlock:(void(^)(MHDismissIgnore *ignore))IgnoreBlock{

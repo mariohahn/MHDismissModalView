@@ -13,20 +13,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
-    //Global Call to install MHDismiss
-    MHDismissIgnore *withoutScroll = [[MHDismissIgnore alloc] initWithViewControllerName:@"ExampleModalViewWithoutScrollViewController"
-                                                                        ignoreBlurEffect:NO
-                                                                           ignoreGesture:NO];
+
     
-//    [[MHDismissSharedManager sharedDismissManager] installWithTheme:MHModalThemeWhite
-//                                                 withIgnoreObjects:@[withoutScroll]];
-    
-    [[MHDismissSharedManager sharedDismissManager] installWithTheme:MHModalThemeWhite withIgnorBlock:^(MHDismissIgnore *ignore) {
-        NSLog(@"%@",ignore.viewControllerName);
-    }];
-    
+    [[MHDismissSharedManager sharedDismissManager] installWithTheme:MHModalThemeWhite
+                                                     withIgnorBlock:^(MHDismissIgnore *ignore) {
+                                                         if ([ignore.viewControllerName isEqualToString:@"ExampleModalViewController"]) {
+                                                             ignore.ignoreBlurEffect = YES;
+                                                         }
+                                                     }];
     return YES;
 }
-							
+
 
 @end
