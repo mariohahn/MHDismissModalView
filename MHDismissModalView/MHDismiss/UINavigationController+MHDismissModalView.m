@@ -358,9 +358,16 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         UIImageView *view =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, recognizer.options.screenShot.size.width, recognizer.options.screenShot.size.height)];
         view.image = recognizer.options.screenShot;
         view.tag =203;
-        [[[UIApplication sharedApplication] keyWindow]insertSubview:view belowSubview:self.view];
+
+        // UILayoutContainerView in IOS 8 is not 1st view after keyWindow
+        if ([[[UIDevice currentDevice] systemVersion] floatValue ] >= 8) {
+            [[[[[UIApplication sharedApplication] keyWindow] subviews] objectAtIndex:0] insertSubview:view belowSubview:self.view];
+        }
+        else{
+            [[[UIApplication sharedApplication] keyWindow] insertSubview:view belowSubview:self.view];
+        }
     }
-    
+
 }
 
 -(void)scrollRecognizerNavbar:(MHGestureRecognizerWithOptions *)recognizer{
