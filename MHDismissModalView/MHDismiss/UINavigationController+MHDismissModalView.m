@@ -358,7 +358,12 @@ NSString * const HAS_SCROLLVIEW = @"HAS_SCROLLVIEW";
         UIImageView *view =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, recognizer.options.screenShot.size.width, recognizer.options.screenShot.size.height)];
         view.image = recognizer.options.screenShot;
         view.tag =203;
-        [[[UIApplication sharedApplication] keyWindow]insertSubview:view belowSubview:self.view];
+
+        UIView *aView = self.view;
+        while (aView.superview != [[UIApplication sharedApplication] keyWindow]) {
+          aView = aView.superview;
+        }
+        [[[UIApplication sharedApplication] keyWindow] insertSubview:view belowSubview:aView];
     }
     
 }
